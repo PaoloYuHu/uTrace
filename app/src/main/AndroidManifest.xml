@@ -9,7 +9,7 @@
     <uses-permission
         android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UTrace"
         tools:targetApi="31">
+        <activity
+            android:name=".Activity.LoginAndRegistration"
+            android:exported="false" />
         <activity
             android:name=".Activity.AppUsage"
             android:exported="false" />

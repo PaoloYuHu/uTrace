@@ -58,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
         Intent myIntent = new Intent(MainActivity.this, AppUsage.class);
         myIntent.putExtra("saluto", "hello"); //Optional parameters
 
+        Intent loginIntent = new Intent(MainActivity.this, LoginAndRegistration.class);
+
+        MainActivity.this.startActivity(loginIntent);
+
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
