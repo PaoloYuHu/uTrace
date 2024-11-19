@@ -1,6 +1,8 @@
 package com.example.utrace.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +10,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.utrace.Fragment.LoginFragment;
 import com.example.utrace.R;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class LoginAndRegistration extends AppCompatActivity {
 
@@ -22,5 +29,29 @@ public class LoginAndRegistration extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        loadFragmentLogin();
+
     }
+
+    private void loadFragmentLogin() {
+        LoginFragment fragment = new LoginFragment();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.replace(R.id.fragment_container, fragment);
+
+        // Optionally, add the transaction to the back stack
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    public void loadFragmentRegistration() {
+        Intent intent = new Intent(this, LoginAndRegistration.class);
+        startActivity(intent);
+    }
+
 }

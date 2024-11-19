@@ -30,4 +30,13 @@
         android:layout_marginBottom="16dp"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:navGraph="@navigation/nav_graph"
+        android:name="androidx.navigation.fragment.NavHostFragment" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
