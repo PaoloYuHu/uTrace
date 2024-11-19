@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("AppUsage", "Package: " + usageStats.getPackageName() + ", Time: " + usageStats.getTotalTimeInForeground());
         }
 
+        //prova push su gitdesktop pc paolo
         Intent myIntent = new Intent(MainActivity.this, AppUsage.class);
         myIntent.putExtra("saluto", "hello"); //Optional parameters
 
