@@ -18,16 +18,45 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.utrace.Adapter.AppsListAdapter;
 import com.example.utrace.Model.AppModel;
 import com.example.utrace.R;
+import com.example.utrace.utils.FormatHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class AppUsage extends AppCompatActivity {
 
+    // Debug tag
     private static final String TAG = "AppUsageActivity";
     private RecyclerView recyclerView;
     private AppsListAdapter adapter;
     private List<AppModel> appsList = new ArrayList<>();
+
+    private long filterMinMB = 5 * 1024 * 1024; // 5MB
+
+    private LinearLayout filterMenu;
+    private FloatingActionButton fabFilter;
+    private RadioGroup timeFilterGroup, dataTypeGroup;
+    private Button btnApply;
+
+    // FILTERS
+    private int selectedUsage;
+    private long selectedTime;
+
+    // VALUES
+    private int WIFI = NetworkCapabilities.TRANSPORT_WIFI;
+    private int CELLULAR = NetworkCapabilities.TRANSPORT_CELLULAR;
+    private long DAY = (24 * 60 * 60 * 1000);
+    private long WEEK = (7L * 24 * 60 * 60 * 1000);
+    private long MONTH = (30L * 24 * 60 * 60 * 1000);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,17 +66,37 @@ public class AppUsage extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        fetchInstalledApps();
-        fetchDataUsage();
-        fetchNetworkStats();
+        filterMenu = findViewById(R.id.filter_menu);
+        fabFilter = findViewById(R.id.fab_filter);
+        timeFilterGroup = findViewById(R.id.time_filter_group);
+        dataTypeGroup = findViewById(R.id.data_type_group);
+        btnApply = findViewById(R.id.btn_apply);
+        fabFilter.setOnClickListener(v -> {
+            if (filterMenu.getVisibility() == View.GONE) {
+                filterMenu.setVisibility(View.VISIBLE);
+            } else {
+                filterMenu.setVisibility(View.GONE);
+            }
+        });
+        btnApply.setOnClickListener(v -> applyFilters());
 
-        //filter out apps with lesser than 5MB of internet usage
-        appsList.removeIf(current -> current.getTotalBytes() < 5 * 1024 * 1024);
+        selectedTime = DAY;
+        selectedUsage = WIFI;
+        load();
+    }
+
+    private void load() {
+        appsList.clear();
+        fetchInstalledApps();
+        fetchDataUsage(selectedUsage);
+        fetchNetworkStats();
+        // filter out apps with less than 5MB of internet usage
+        appsList.removeIf(current -> current.getTotalBytes() < filterMinMB);
+        Collections.sort(appsList, Comparator.comparingLong(AppModel::getTotalBytes).reversed());
 
         adapter = new AppsListAdapter(this, appsList);
         recyclerView.setAdapter(adapter);
     }
-
 
     private void fetchInstalledApps() {
         PackageManager packageManager = getPackageManager();
@@ -62,16 +111,15 @@ public class AppUsage extends AppCompatActivity {
         }
     }
 
-    private void fetchDataUsage() {
+    private void fetchDataUsage(int mode) {
         NetworkStatsManager networkStatsManager = (NetworkStatsManager) getSystemService(Context.NETWORK_STATS_SERVICE);
-        // 1000 * 60 * 60 * 24; // 24 hours ago
-        long startTime = System.currentTimeMillis() - (30L * 24 * 60 * 60 * 1000); // 30 days
+        long startTime = System.currentTimeMillis() - selectedTime;
         long endTime = System.currentTimeMillis();
 
         for (AppModel app : appsList) {
             try {
                 NetworkStats stats = networkStatsManager.queryDetailsForUid(
-                        NetworkCapabilities.TRANSPORT_WIFI,
+                        mode,
                         null,
                         startTime,
                         endTime,
@@ -103,12 +151,10 @@ public class AppUsage extends AppCompatActivity {
             return;
         }
 
-        // Define the starting and ending timestamps (e.g., last month)
-        long startTime = System.currentTimeMillis() - (30L * 24 * 60 * 60 * 1000); // 30 days ago
+        long startTime = System.currentTimeMillis() - selectedTime;
         long endTime = System.currentTimeMillis();
 
-        String dataUsage="Consumi totali\n";
-        long mebibyte=1048576;
+        String dataUsage = "Consumi totali\n";
 
         // Query data usage for mobile
         // Rx= reception Tx= transmission
@@ -116,7 +162,7 @@ public class AppUsage extends AppCompatActivity {
             NetworkStats.Bucket bucket = networkStatsManager.querySummaryForDevice(NetworkCapabilities.TRANSPORT_CELLULAR, null, startTime, endTime);
             long mobileRxBytes = bucket.getRxBytes();
             long mobileTxBytes = bucket.getTxBytes();
-            dataUsage+="Mobile Down: " + mobileRxBytes/mebibyte + " MB, Up: " + mobileTxBytes/mebibyte + " MB\n";
+            dataUsage += "Mobile Down: " + FormatHelper.bytesToString(mobileRxBytes) + " Up: " + FormatHelper.bytesToString(mobileTxBytes) + "\n";
             Log.i(TAG, "Mobile Rx: " + mobileRxBytes + " bytes, Tx: " + mobileTxBytes + " bytes");
         } catch (Exception e) {
             Log.e(TAG, "Error querying mobile data usage", e);
@@ -127,12 +173,40 @@ public class AppUsage extends AppCompatActivity {
             NetworkStats.Bucket bucket = networkStatsManager.querySummaryForDevice(NetworkCapabilities.TRANSPORT_WIFI, null, startTime, endTime);
             long wifiRxBytes = bucket.getRxBytes();
             long wifiTxBytes = bucket.getTxBytes();
-            dataUsage+="Wi-Fi Down: " + wifiRxBytes/mebibyte + " MB, Up: " + wifiTxBytes/mebibyte + " MB";
+            dataUsage += "Wi-Fi Down: " + FormatHelper.bytesToString(wifiRxBytes) + " Up: " + FormatHelper.bytesToString(wifiTxBytes);
             Log.i(TAG, "Wi-Fi Rx: " + wifiRxBytes + " bytes, Tx: " + wifiTxBytes + " bytes");
         } catch (Exception e) {
             Log.e(TAG, "Error querying Wi-Fi data usage", e);
         }
-        TextView dataTotal = (TextView) findViewById(R.id.totalUsage);
+        TextView dataTotal = findViewById(R.id.totalUsage);
         dataTotal.setText(dataUsage);
+    }
+
+    private void applyFilters() {
+        int selectedTimeId = timeFilterGroup.getCheckedRadioButtonId();
+        int selectedDataTypeId = dataTypeGroup.getCheckedRadioButtonId();
+
+        RadioButton selectedTimeButton = findViewById(selectedTimeId);
+        RadioButton selectedDataTypeButton = findViewById(selectedDataTypeId);
+
+        String timeFilter = selectedTimeButton.getText().toString();
+        String dataTypeFilter = selectedDataTypeButton.getText().toString();
+
+        if (timeFilter.equals("24h"))
+            selectedTime = DAY;
+        else if (timeFilter.equals("1 week"))
+            selectedTime = WEEK;
+        else
+            selectedTime = MONTH;
+
+        if (dataTypeFilter.equals("WiFi"))
+            selectedUsage = WIFI;
+        else
+            selectedUsage = CELLULAR;
+
+        load();
+
+        // Hide filter menu after applying filters
+        filterMenu.setVisibility(View.GONE);
     }
 }

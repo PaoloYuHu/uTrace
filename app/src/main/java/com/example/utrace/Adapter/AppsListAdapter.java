@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.utrace.Model.AppModel;
 import com.example.utrace.R;
+import com.example.utrace.utils.FormatHelper;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class AppsListAdapter extends RecyclerView.Adapter<AppsListAdapter.AppsLi
         AppModel app = mAppsList.get(position);
         holder.appName.setText(app.getAppName());
         holder.appPackageName.setText(app.getPackageName());
-        holder.dataUsage.setText("Rx: " + app.getRxBytes() + " bytes, Tx: " + app.getTxBytes() + " bytes");
+        holder.dataUsage.setText("Down: " + FormatHelper.bytesToString(app.getRxBytes()) + " Up: " + FormatHelper.bytesToString(app.getTxBytes()));
 
         try {
             Drawable appIcon = mActivity.getPackageManager().getApplicationIcon(app.getPackageName());
