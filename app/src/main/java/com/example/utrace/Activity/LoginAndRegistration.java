@@ -32,8 +32,6 @@ public class LoginAndRegistration extends AppCompatActivity {
         });
 
         loadFragmentLogin();
-
-        //loadFragmentRegistration();
     }
 
     private void loadFragmentLogin() {
@@ -51,20 +49,5 @@ public class LoginAndRegistration extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void loadFragmentRegistration() {
-        RegistrationFragment fragment = new RegistrationFragment();
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        transaction.replace(R.id.fragment_container, fragment);
-
-        // Optionally, add the transaction to the back stack
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
-
-    }
 
 }
