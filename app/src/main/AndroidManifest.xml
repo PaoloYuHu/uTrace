@@ -15,9 +15,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/utrace_logo"
+        android:icon="@drawable/utrace_miniature_logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/utrace_logo"
+        android:roundIcon="@drawable/utrace_miniature_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.UTrace"
         tools:targetApi="31">
