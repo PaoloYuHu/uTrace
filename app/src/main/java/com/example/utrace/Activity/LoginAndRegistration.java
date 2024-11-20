@@ -32,6 +32,9 @@ public class LoginAndRegistration extends AppCompatActivity {
         });
 
         loadFragmentLogin();
+
+        // prova commit su nuovo branch
+
     }
 
     private void loadFragmentLogin() {
