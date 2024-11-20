@@ -1,6 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.RegistrationFragment"/>
+    android:background="#f9f9f9">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Logo in alto a destra -->
+        <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/utrace_logo"
+            android:contentDescription="App Logo"
+            android:layout_gravity="end"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Greeting Text -->
+        <TextView
+            android:id="@+id/textViewGreeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Benvenuto!"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:textColor="#3ab874"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Username Input -->
+        <EditText
+            android:id="@+id/editTextUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:inputType="textPersonName"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Email Input -->
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Password Input -->
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Confirm Password Input -->
+        <EditText
+            android:id="@+id/editTextConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Conferma Password"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/RegisterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#3ab874"
+            android:padding="14dp"
+            android:text="Registrati"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:layout_marginBottom="30sp" />
+
+        <!-- "Hai già un account?" Text -->
+        <TextView
+            android:id="@+id/textViewAlreadyHaveAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Hai già un account?"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:layout_marginTop="60dp" />
+
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/LoginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="#009688"
+            android:padding="14dp"
+            android:text="Accedi"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+</ScrollView>

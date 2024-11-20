@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.utrace.Fragment.LoginFragment;
+import com.example.utrace.Fragment.RegistrationFragment;
 import com.example.utrace.R;
 
 import androidx.fragment.app.Fragment;
@@ -32,6 +33,7 @@ public class LoginAndRegistration extends AppCompatActivity {
 
         loadFragmentLogin();
 
+        //loadFragmentRegistration();
     }
 
     private void loadFragmentLogin() {
@@ -50,8 +52,19 @@ public class LoginAndRegistration extends AppCompatActivity {
     }
 
     public void loadFragmentRegistration() {
-        Intent intent = new Intent(this, LoginAndRegistration.class);
-        startActivity(intent);
+        RegistrationFragment fragment = new RegistrationFragment();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.replace(R.id.fragment_container, fragment);
+
+        // Optionally, add the transaction to the back stack
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+
     }
 
 }

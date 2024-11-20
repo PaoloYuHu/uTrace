@@ -5,9 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +27,16 @@ public class LoginFragment extends Fragment {
 
         binding = FragmentLoginBinding.inflate(inflater, container, false);
 
-        // Handle register button click
+        // Gestisci click del bottone per portare al form di registrazione
         binding.RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to the RegistrationFragment
-                NavController navController = Navigation.findNavController(v);
-                navController.navigate(R.id.action_login_to_register);
+                // Naviga al RegisterFragment
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new RegistrationFragment());
+                fragmentTransaction.addToBackStack(null); // Aggiunge alla backstack
+                fragmentTransaction.commit();
             }
         });
 
