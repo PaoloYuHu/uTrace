@@ -1,42 +1,40 @@
-package com.example.utrace.Activity;
+package com.example.utrace.Fragment;
 
-import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.app.usage.NetworkStats;
 import android.app.usage.NetworkStatsManager;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.net.NetworkCapabilities;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
-
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.utrace.Adapter.AppsListAdapter;
 import com.example.utrace.Model.AppModel;
 import com.example.utrace.R;
 import com.example.utrace.utils.FormatHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.view.View;
-
+import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class AppUsage extends AppCompatActivity {
+public class AppUsageFragment extends Fragment {
 
-    // Debug tag
-    private static final String TAG = "AppUsageActivity";
+    private static final String TAG = "AppUsageFragment";
     private RecyclerView recyclerView;
+    private View view;
     private AppsListAdapter adapter;
     private List<AppModel> appsList = new ArrayList<>();
 
@@ -47,30 +45,28 @@ public class AppUsage extends AppCompatActivity {
     private RadioGroup timeFilterGroup, dataTypeGroup;
     private Button btnApply;
 
-    // FILTERS
     private int selectedUsage;
     private long selectedTime;
 
-    // VALUES
-    private int WIFI = NetworkCapabilities.TRANSPORT_WIFI;
-    private int CELLULAR = NetworkCapabilities.TRANSPORT_CELLULAR;
-    private long DAY = (24 * 60 * 60 * 1000);
-    private long WEEK = (7L * 24 * 60 * 60 * 1000);
-    private long MONTH = (30L * 24 * 60 * 60 * 1000);
+    private static final int WIFI = NetworkCapabilities.TRANSPORT_WIFI;
+    private static final int CELLULAR = NetworkCapabilities.TRANSPORT_CELLULAR;
+    private static final long DAY = (24 * 60 * 60 * 1000);
+    private static final long WEEK = (7L * 24 * 60 * 60 * 1000);
+    private static final long MONTH = (30L * 24 * 60 * 60 * 1000);
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_app_usage);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_app_usage, container, false);
+        
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        filterMenu = findViewById(R.id.filter_menu);
-        fabFilter = findViewById(R.id.fab_filter);
-        timeFilterGroup = findViewById(R.id.time_filter_group);
-        dataTypeGroup = findViewById(R.id.data_type_group);
-        btnApply = findViewById(R.id.btn_apply);
+        filterMenu = view.findViewById(R.id.filter_menu);
+        fabFilter = view.findViewById(R.id.fab_filter);
+        timeFilterGroup = view.findViewById(R.id.time_filter_group);
+        dataTypeGroup = view.findViewById(R.id.data_type_group);
+        btnApply = view.findViewById(R.id.btn_apply);
         fabFilter.setOnClickListener(v -> {
             if (filterMenu.getVisibility() == View.GONE) {
                 filterMenu.setVisibility(View.VISIBLE);
@@ -83,6 +79,8 @@ public class AppUsage extends AppCompatActivity {
         selectedTime = DAY;
         selectedUsage = WIFI;
         load();
+
+        return view;
     }
 
     private void load() {
@@ -90,16 +88,15 @@ public class AppUsage extends AppCompatActivity {
         fetchInstalledApps();
         fetchDataUsage(selectedUsage);
         fetchNetworkStats();
-        // filter out apps with less than 5MB of internet usage
         appsList.removeIf(current -> current.getTotalBytes() < filterMinMB);
         Collections.sort(appsList, Comparator.comparingLong(AppModel::getTotalBytes).reversed());
 
-        adapter = new AppsListAdapter(this, appsList);
+        adapter = new AppsListAdapter(getActivity(), appsList);
         recyclerView.setAdapter(adapter);
     }
 
     private void fetchInstalledApps() {
-        PackageManager packageManager = getPackageManager();
+        PackageManager packageManager = getActivity().getPackageManager();
         List<ApplicationInfo> packages = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
 
         for (ApplicationInfo appInfo : packages) {
@@ -112,7 +109,7 @@ public class AppUsage extends AppCompatActivity {
     }
 
     private void fetchDataUsage(int mode) {
-        NetworkStatsManager networkStatsManager = (NetworkStatsManager) getSystemService(Context.NETWORK_STATS_SERVICE);
+        NetworkStatsManager networkStatsManager = (NetworkStatsManager) getActivity().getSystemService(getContext().NETWORK_STATS_SERVICE);
         long startTime = System.currentTimeMillis() - selectedTime;
         long endTime = System.currentTimeMillis();
 
@@ -145,7 +142,7 @@ public class AppUsage extends AppCompatActivity {
     }
 
     private void fetchNetworkStats() {
-        NetworkStatsManager networkStatsManager = (NetworkStatsManager) this.getSystemService(Context.NETWORK_STATS_SERVICE);
+        NetworkStatsManager networkStatsManager = (NetworkStatsManager) getActivity().getSystemService(getContext().NETWORK_STATS_SERVICE);
         if (networkStatsManager == null) {
             Log.e(TAG, "NetworkStatsManager is null.");
             return;
@@ -156,8 +153,6 @@ public class AppUsage extends AppCompatActivity {
 
         String dataUsage = "Consumi totali\n";
 
-        // Query data usage for mobile
-        // Rx= reception Tx= transmission
         try {
             NetworkStats.Bucket bucket = networkStatsManager.querySummaryForDevice(NetworkCapabilities.TRANSPORT_CELLULAR, null, startTime, endTime);
             long mobileRxBytes = bucket.getRxBytes();
@@ -168,7 +163,6 @@ public class AppUsage extends AppCompatActivity {
             Log.e(TAG, "Error querying mobile data usage", e);
         }
 
-        // Query data usage for Wi-Fi
         try {
             NetworkStats.Bucket bucket = networkStatsManager.querySummaryForDevice(NetworkCapabilities.TRANSPORT_WIFI, null, startTime, endTime);
             long wifiRxBytes = bucket.getRxBytes();
@@ -178,7 +172,7 @@ public class AppUsage extends AppCompatActivity {
         } catch (Exception e) {
             Log.e(TAG, "Error querying Wi-Fi data usage", e);
         }
-        TextView dataTotal = findViewById(R.id.totalUsage);
+        TextView dataTotal = view.findViewById(R.id.totalUsage);
         dataTotal.setText(dataUsage);
     }
 
@@ -186,8 +180,8 @@ public class AppUsage extends AppCompatActivity {
         int selectedTimeId = timeFilterGroup.getCheckedRadioButtonId();
         int selectedDataTypeId = dataTypeGroup.getCheckedRadioButtonId();
 
-        RadioButton selectedTimeButton = findViewById(selectedTimeId);
-        RadioButton selectedDataTypeButton = findViewById(selectedDataTypeId);
+        RadioButton selectedTimeButton = view.findViewById(selectedTimeId);
+        RadioButton selectedDataTypeButton = view.findViewById(selectedDataTypeId);
 
         String timeFilter = selectedTimeButton.getText().toString();
         String dataTypeFilter = selectedDataTypeButton.getText().toString();
@@ -206,7 +200,6 @@ public class AppUsage extends AppCompatActivity {
 
         load();
 
-        // Hide filter menu after applying filters
         filterMenu.setVisibility(View.GONE);
     }
 }

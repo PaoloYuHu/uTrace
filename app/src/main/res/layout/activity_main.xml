@@ -19,30 +19,29 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_main" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="16dp"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+    <!-- Main content area -->
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:navGraph="@navigation/nav_graph"
-        android:name="androidx.navigation.fragment.NavHostFragment" />
+        android:id="@+id/MainContainer"
+        android:name="com.example.utrace.Fragment.HomeFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="?attr/actionBarSize"
+        android:paddingBottom="?attr/actionBarSize"/>
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/BottomNavBar"
+        android:name="com.example.utrace.Fragment.BottomNavigationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="bottom" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
