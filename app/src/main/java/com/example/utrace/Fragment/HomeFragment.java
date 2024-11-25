@@ -3,13 +3,14 @@ package com.example.utrace.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.ColorInt;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.utrace.R;
 import com.github.mikephil.charting.charts.BarChart;
@@ -33,10 +34,10 @@ public class HomeFragment extends Fragment {
     private View view;
     private LinearLayout square1;
     private LinearLayout square2;
-    private EditText text1_1;
-    private EditText text1_2;
-    private EditText text2_1;
-    private EditText text2_2;
+    private TextView text1_1;
+    private TextView text1_2;
+    private TextView text2_1;
+    private TextView text2_2;
     private BarChart chart1;
     private BarChart chart2;
 
@@ -67,8 +68,8 @@ public class HomeFragment extends Fragment {
         chart1 = view.findViewById(R.id.chart1);
         chart2 = view.findViewById(R.id.chart2);
 
-        text1_1.setText("CO2 consumata:");
-        text2_1.setText("rete consumata:");
+        text1_1.setText("Batteria consumata:");
+        text2_1.setText("Rete utilizzata:");
 
         //finche non abbiamo un db riempiamo la applicazione con dati finti
         putSampleData();
@@ -79,23 +80,18 @@ public class HomeFragment extends Fragment {
 
     private void putSampleData(){
 
-        text1_2.setText("14 tons");
-        text2_2.setText("77Mb");
-        sampleCharts();
+        text1_2.setText("47Watt - 7Kg");
+        text2_2.setText("100Mb - 2Kg");
+        prepareChart(chart1, Color.MAGENTA, "Consumo batteria");
+        prepareChart(chart2, Color.BLUE, "Consumo rete");
         style();
     }
 
-    private void sampleCharts() {
+    private void prepareChart(BarChart chart, @ColorInt int color, String label){
 
         List<String> days = List.of(
                 "Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"
         );
-
-        prepareChart(chart1, days);
-        prepareChart(chart2, days);
-    }
-
-    private void prepareChart(BarChart barChart, List<String> label) {
 
         Random random = new Random();
 
@@ -109,24 +105,33 @@ public class HomeFragment extends Fragment {
                 new BarEntry(6,random.nextInt(7))
         );
 
-        BarDataSet datasSet = new BarDataSet(entries, "");
-        barChart.setData(new BarData(datasSet));
+        BarDataSet datasSet = new BarDataSet(entries, label);
+        datasSet.setColor(color);
+        chart.setData(new BarData(datasSet));
 
-        YAxis yAxis = barChart.getAxisLeft();
+        YAxis yAxis = chart.getAxisLeft();
         yAxis.setAxisMaximum(10f);
         yAxis.setAxisLineWidth(1.5f);
-        yAxis.setLabelCount(label.size());
-        yAxis.setAxisLineColor(Color.BLUE);
+        yAxis.setLabelCount(days.size());
 
-        XAxis xAxis = barChart.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(label));
+        //chart.getAxisRight() riguarda la colonna dei valori a dx che non ci interessa
+        chart.getAxisRight().setDrawLabels(false); //toglie i valori
+        chart.getAxisRight().setDrawGridLines(false); // toglie le righe sulla griglia
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(days));
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
         xAxis.setGranularityEnabled(true);
 
-        barChart.getDescription().setEnabled(false);
-        barChart.invalidate();
+        xAxis.setTextColor(Color.BLACK);
+        xAxis.setDrawGridLines(false);
+
+        chart.getDescription().setEnabled(false);
+        chart.invalidate();
+
     }
+
 
     private void style(){
 
