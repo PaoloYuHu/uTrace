@@ -1,14 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Fragment.HomeFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="HELLO HOME" />
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
-</FrameLayout>
+        <!-- sezione sopra -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+                <LinearLayout
+                    android:id="@+id/square1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="#E0E0E0"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/text1_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/myGreen"
+                        android:textSize="25dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/text1_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/myGreen"
+                        android:textSize="25dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="bottom"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/square2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="#E0E0E0"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/text2_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/myGreen"
+                        android:textSize="25dp"/>
+
+                    <TextView
+                        android:id="@+id/text2_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/myGreen"
+                        android:textSize="25dp"
+                        android:layout_marginTop="20dp"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginBottom="16dp"
+                android:background="#E0E0E0">
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/chart1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginBottom="16dp"
+                android:background="#E0E0E0">
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/chart2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <!-- la view puo essere scrollabile
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#E0E0E0"
+            android:layout_marginBottom="16dp">
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barChart3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+        -->
+    </ScrollView>
+</RelativeLayout>

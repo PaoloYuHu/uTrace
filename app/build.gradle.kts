@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation("com.google.code.gson:gson:2.11.0")
     implementation(libs.activity)
+    implementation(libs.mpandroidchart)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
