@@ -41,11 +41,15 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
-    implementation("com.google.code.gson:gson:2.11.0")
+    implementation(libs.gson)
     implementation(libs.activity)
+    implementation(libs.mpandroidchart)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+//    implementation("com.github.PhilJay:MPAndroidChart:v3.0.3")
+
 }
 
 
