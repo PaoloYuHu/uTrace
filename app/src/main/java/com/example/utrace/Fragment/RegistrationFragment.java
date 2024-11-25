@@ -25,6 +25,16 @@ public class RegistrationFragment extends Fragment {
 
         binding = FragmentRegistrationBinding.inflate(inflater, container, false);
 
+        binding.RegisterButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new HomeFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
         // Gestisci click del bottone per portare al login
         binding.LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override

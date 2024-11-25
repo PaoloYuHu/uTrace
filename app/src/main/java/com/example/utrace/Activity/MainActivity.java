@@ -46,6 +46,19 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
         startActivity(intent);
 
+<<<<<<< Updated upstream
+=======
+        // Replace condition with your login verification logic
+        boolean islogged = false;
+        if (!islogged) {
+            Intent loginIntent = new Intent(MainActivity.this, LoginAndRegistration.class);
+            MainActivity.this.startActivity(loginIntent);
+        }
+
+    }
+
+    private boolean hasUsageStatsPermission() {
+>>>>>>> Stashed changes
         UsageStatsManager usageStatsManager = (UsageStatsManager) getSystemService(Context.USAGE_STATS_SERVICE);
         long endTime = System.currentTimeMillis();
         long startTime = endTime - 1000 * 60 * 60 * 24; // last 24 hours
