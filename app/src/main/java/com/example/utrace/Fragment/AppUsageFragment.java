@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,7 +59,9 @@ public class AppUsageFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_app_usage, container, false);
-        
+
+        setToolbarTitle("App usage");
+
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -154,7 +157,7 @@ public class AppUsageFragment extends Fragment {
         String dataUsage = "Consumi totali\n";
 
         try {
-            NetworkStats.Bucket bucket = networkStatsManager.querySummaryForDevice(NetworkCapabilities.TRANSPORT_CELLULAR, null, startTime, endTime);
+            NetworkStats.Bucket bucket = networkStatsManager.querySummaryForDevice(CELLULAR, null, startTime, endTime);
             long mobileRxBytes = bucket.getRxBytes();
             long mobileTxBytes = bucket.getTxBytes();
             dataUsage += "Mobile Down: " + FormatHelper.bytesToString(mobileRxBytes) + " Up: " + FormatHelper.bytesToString(mobileTxBytes) + "\n";
@@ -164,7 +167,7 @@ public class AppUsageFragment extends Fragment {
         }
 
         try {
-            NetworkStats.Bucket bucket = networkStatsManager.querySummaryForDevice(NetworkCapabilities.TRANSPORT_WIFI, null, startTime, endTime);
+            NetworkStats.Bucket bucket = networkStatsManager.querySummaryForDevice(WIFI, null, startTime, endTime);
             long wifiRxBytes = bucket.getRxBytes();
             long wifiTxBytes = bucket.getTxBytes();
             dataUsage += "Wi-Fi Down: " + FormatHelper.bytesToString(wifiRxBytes) + " Up: " + FormatHelper.bytesToString(wifiTxBytes);
@@ -201,5 +204,11 @@ public class AppUsageFragment extends Fragment {
         load();
 
         filterMenu.setVisibility(View.GONE);
+    }
+
+    private void setToolbarTitle(String title) {
+        if (getActivity() != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(title);
+        }
     }
 }

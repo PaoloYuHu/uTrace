@@ -2,6 +2,7 @@ package com.example.utrace.Fragment;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -61,6 +62,16 @@ public class MissionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_missions, container, false);
+        View view = inflater.inflate(R.layout.fragment_missions, container, false);
+
+        setToolbarTitle("Missions");
+
+        return view;
+    }
+
+    private void setToolbarTitle(String title) {
+        if (getActivity() != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(title);
+        }
     }
 }

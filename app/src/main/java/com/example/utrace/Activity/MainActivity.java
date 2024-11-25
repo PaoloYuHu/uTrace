@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Replace condition with your login verification logic
-        boolean islogged = true;
+        boolean islogged = false;
         if (!islogged) {
             Intent loginIntent = new Intent(MainActivity.this, LoginAndRegistration.class);
             MainActivity.this.startActivity(loginIntent);
@@ -65,4 +65,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
