@@ -1,5 +1,6 @@
 package com.example.utrace.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,9 +12,14 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.utrace.Activity.LoginAndRegistration;
+import com.example.utrace.Activity.MainActivity;
 import com.example.utrace.databinding.FragmentLoginBinding;
 
 import com.example.utrace.R;
+
+import java.util.Objects;
 
 
 public class LoginFragment extends Fragment {
@@ -31,12 +37,11 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Gestisci il click del bottone di login
-                // Naviga al HomeFragment
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new HomeFragment() );
-                fragmentTransaction.addToBackStack(null); // Aggiunge alla backstack
-                fragmentTransaction.commit();
+                Intent mainIntent = new Intent(getActivity(), MainActivity.class);
+                mainIntent.putExtra("name", "ciaone");
+                mainIntent.putExtra("id","1234");
+                requireActivity().startActivity(mainIntent);
+                requireActivity().finish();
             }
         });
 

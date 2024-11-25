@@ -35,11 +35,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        // Replace condition with your login verification logic
-        boolean islogged = false;
-        if (!islogged) {
-            Intent loginIntent = new Intent(MainActivity.this, LoginAndRegistration.class);
-            MainActivity.this.startActivity(loginIntent);
+        // manage login and registration
+        String name = getIntent().getStringExtra("name");
+        String id = getIntent().getStringExtra("id");
+        boolean localStorageIsEmpty = true;
+        if (localStorageIsEmpty) {
+            if(name==null && id==null){
+                Intent loginIntent = new Intent(MainActivity.this, LoginAndRegistration.class);
+                MainActivity.this.startActivity(loginIntent);
+                finish();
+            }else{
+                //salvare i dati name e id in locale così la prossima volta
+                //non chiede più il login
+            }
+
         }
 
     }

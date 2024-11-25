@@ -16,7 +16,7 @@ import com.example.utrace.R;
 public class TipsFragment extends Fragment {
 
     private View view;
-    private View view_title;
+    private TextView title;
     private TextView tip;
     private Button tipsBtn;
     private String[] tips;
@@ -54,15 +54,16 @@ public class TipsFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_tips, container, false);
 
-        view_title = inflater.inflate(R.layout.fragment_tips, container, false);
 
         setToolbarTitle("Green Tips");
 
         // Initialize views
+        title = view.findViewById(R.id.tip_title);
         tip = view.findViewById(R.id.tip);
         tipsBtn = view.findViewById(R.id.next);
 
         // Set the first tip
+        title.setText(titles[currentTipIndex]);
         tip.setText(tips[currentTipIndex]);
 
         // Set button click listener to update the tip
@@ -76,14 +77,10 @@ public class TipsFragment extends Fragment {
         currentTipIndex = (currentTipIndex + 1) % tips.length;
 
         // Update the TextView with the next tip
+        title.setText(titles[currentTipIndex]);
         tip.setText(tips[currentTipIndex]);
     }
 
-    private void changeTitle() {
-        // Increment the tip index
-        currentTipIndex = (currentTipIndex + 1) % titles.length;
-
-    }
 
     private void setToolbarTitle(String title) {
         if (getActivity() != null) {

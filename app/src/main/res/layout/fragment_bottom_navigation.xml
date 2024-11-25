@@ -10,5 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:menu="@menu/bottom_navigation_menu"
-        android:background="?android:attr/windowBackground" />
+        android:background="@color/main_color"
+        app:itemIconTint="@color/nav_bar_colors"
+        app:itemTextColor="@color/nav_bar_colors"
+        app:itemBackground="@drawable/nav_item_background"/>
 </FrameLayout>

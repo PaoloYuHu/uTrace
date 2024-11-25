@@ -35,6 +35,12 @@ public class LoginAndRegistration extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed(){
+        finish();
+        super.onBackPressed();
+    }
+
     private void loadFragmentLogin() {
         LoginFragment fragment = new LoginFragment();
 
