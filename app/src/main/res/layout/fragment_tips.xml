@@ -6,17 +6,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".Fragment.TipsFragment">
+    tools:context=".Fragment.TipsFragment"
+    android:gravity="center">
 
     <ScrollView
         android:id="@+id/board"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:background="#C5EDAB"
         android:drawingCacheQuality="high"
         android:padding="16dp"
         android:visibility="visible">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,6 +32,24 @@
             android:drawingCacheQuality="auto"
             android:orientation="vertical"
             android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/imageViewLogo"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:src="@drawable/tips_icon" />
+
+            <TextView
+                android:id="@+id/tip_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Tip Title"
+                android:textColor="@color/main_color"
+                android:textSize="26dp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tip"
@@ -34,7 +60,7 @@
                 android:gravity="center"
                 android:text="Initial Tip"
                 android:textColor="@color/black"
-                android:textSize="25dp" />
+                android:textSize="24dp" />
 
             <Button
                 android:id="@+id/next"
@@ -43,10 +69,10 @@
                 android:layout_gravity="end|right"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#3ab874"
-                android:fontFamily="serif"
                 android:text="Next Tip"
                 android:textColor="#FFFFFF"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>

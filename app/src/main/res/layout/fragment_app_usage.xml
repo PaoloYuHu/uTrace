@@ -105,7 +105,7 @@
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginBottom="16dp"
-            tools:src="@drawable/filter" />
+            android:src="@drawable/filter" />
 
     </LinearLayout>
 

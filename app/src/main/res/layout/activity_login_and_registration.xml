@@ -7,20 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".Activity.LoginAndRegistration">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="211dp"
-        android:layout_height="221dp"
-        android:layout_marginStart="267dp"
-        android:layout_marginBottom="586dp"
-        android:src="@drawable/utrace_logo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.013" />
-
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"

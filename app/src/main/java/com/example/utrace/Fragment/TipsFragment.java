@@ -16,9 +16,11 @@ import com.example.utrace.R;
 public class TipsFragment extends Fragment {
 
     private View view;
+    private View view_title;
     private TextView tip;
     private Button tipsBtn;
     private String[] tips;
+    private String[] titles;
     private int currentTipIndex = 0;
 
     public TipsFragment() {
@@ -36,12 +38,23 @@ public class TipsFragment extends Fragment {
                 "Usa energia verde: Passa a fornitori di energia rinnovabile.",
                 "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA     PROVA SCROLL    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         };
+
+        // Initialize titles
+        titles = new String[]{
+             "Fai la tua parte!",
+             "Spirito di iniziativa.",
+             "Green Energy.",
+             "Tip Title"
+        };
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.fragment_tips, container, false);
+
+        view_title = inflater.inflate(R.layout.fragment_tips, container, false);
 
         setToolbarTitle("Green Tips");
 
@@ -64,6 +77,12 @@ public class TipsFragment extends Fragment {
 
         // Update the TextView with the next tip
         tip.setText(tips[currentTipIndex]);
+    }
+
+    private void changeTitle() {
+        // Increment the tip index
+        currentTipIndex = (currentTipIndex + 1) % titles.length;
+
     }
 
     private void setToolbarTitle(String title) {
