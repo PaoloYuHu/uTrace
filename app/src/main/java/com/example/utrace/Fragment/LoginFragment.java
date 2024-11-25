@@ -27,6 +27,19 @@ public class LoginFragment extends Fragment {
 
         binding = FragmentLoginBinding.inflate(inflater, container, false);
 
+        binding.LoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Gestisci il click del bottone di login
+                // Naviga al HomeFragment
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new HomeFragment() );
+                fragmentTransaction.addToBackStack(null); // Aggiunge alla backstack
+                fragmentTransaction.commit();
+            }
+        });
+
         // Gestisci click del bottone per portare al form di registrazione
         binding.RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
