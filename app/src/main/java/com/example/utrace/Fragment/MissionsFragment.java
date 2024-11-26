@@ -4,58 +4,30 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.utrace.Adapter.MissionsAdapter;
+import com.example.utrace.Model.Mission;
 import com.example.utrace.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MissionsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class MissionsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public MissionsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MissionsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MissionsFragment newInstance(String param1, String param2) {
-        MissionsFragment fragment = new MissionsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private static final String TAG = "MissionsFragment";
+    private View view;
+    private RecyclerView recyclerView;
+    private MissionsAdapter myAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -65,6 +37,31 @@ public class MissionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_missions, container, false);
 
         setToolbarTitle("Missions");
+
+        // Trova la RecyclerView
+        recyclerView = view.findViewById(R.id.missions_list);
+
+        // Configura il LayoutManager per la RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Crea i dati da visualizzare
+        List<Mission> items = new ArrayList<>();
+        items.add(new Mission("Missione 1", "Completa 10 attività.", 20, R.drawable.utrace_miniature_logo));
+        items.add(new Mission("Missione 2", "Raggiungi il livello 5.", 30, R.drawable.utrace_miniature_logo));
+        items.add(new Mission("Missione 3", "Ottieni un punteggio di 1000.", 40, R.drawable.utrace_miniature_logo));
+        items.add(new Mission("Missione 4", "Partecipa a 3 eventi.", 70, R.drawable.utrace_miniature_logo));
+        items.add(new Mission("Missione 5", "Invita un amico al gioco.", 90, R.drawable.utrace_miniature_logo));
+        items.add(new Mission("Missione 6", "Completa tutte le missioni.", 100, R.drawable.utrace_miniature_logo));
+        items.add(new Mission("Missione 7", "Completa tutte le missioni.", 100, R.drawable.utrace_miniature_logo));
+        items.add(new Mission("Missione 8", "Completa tutte le missioni.", 100, R.drawable.utrace_miniature_logo));
+        items.add(new Mission("Missione 9", "Completa tutte le missioni.", 100, R.drawable.utrace_miniature_logo));
+        items.add(new Mission("Missione 10", "Completa tutte le missioni.", 100, R.drawable.utrace_miniature_logo));
+
+        // Inizializza l'Adapter con i dati
+        myAdapter = new MissionsAdapter(items);
+
+        // Assegna l'Adapter alla RecyclerView
+        recyclerView.setAdapter(myAdapter);
 
         return view;
     }
