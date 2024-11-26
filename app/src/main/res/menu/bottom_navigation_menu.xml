@@ -3,17 +3,21 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/home_icon"
-        android:title="Home" />
+        android:title="Home"
+        android:background="@null"/>
     <item
         android:id="@+id/navigation_missions"
         android:icon="@drawable/mission_icon"
-        android:title="Missions" />
+        android:title="Missions"
+        android:background="@null"/>
     <item
         android:id="@+id/navigation_usage"
         android:icon="@drawable/usage_icon"
-        android:title="Usage" />
+        android:title="Usage"
+        android:background="@null"/>
     <item
         android:id="@+id/navigation_tips"
         android:icon="@drawable/tips_icon"
-        android:title="Tips" />
+        android:title="Tips"
+        android:background="@null"/>
 </menu>

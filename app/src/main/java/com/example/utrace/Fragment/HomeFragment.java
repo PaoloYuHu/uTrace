@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.ColorInt;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -27,13 +29,13 @@ import java.util.Random;
 public class HomeFragment extends Fragment {
 
     private static final int APP_COLOR = Color.BLACK;
-    private static final int BACKGROUND_COLOR = Color.GRAY;
-    private static final int PRIMARY_TEXT_COLOR = Color.GREEN;
+    // private static final int BACKGROUND_COLOR = Color.GRAY;
+    // private static final int PRIMARY_TEXT_COLOR = Color.GREEN;
 
 
     private View view;
-    private LinearLayout square1;
-    private LinearLayout square2;
+    private CardView square1;
+    private CardView square2;
     private TextView text1_1;
     private TextView text1_2;
     private TextView text2_1;
@@ -59,6 +61,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         this.view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        setToolbarTitle("Home");
+
         square1 = view.findViewById(R.id.square1);
         square2 = view.findViewById(R.id.square2);
         text1_1 = view.findViewById(R.id.text1_1);
@@ -82,7 +87,7 @@ public class HomeFragment extends Fragment {
 
         text1_2.setText("47Watt - 7Kg");
         text2_2.setText("100Mb - 2Kg");
-        prepareChart(chart1, Color.MAGENTA, "Consumo batteria");
+        prepareChart(chart1, Color.GREEN, "Consumo batteria");
         prepareChart(chart2, Color.BLUE, "Consumo rete");
         style();
     }
@@ -134,19 +139,13 @@ public class HomeFragment extends Fragment {
 
 
     private void style(){
-
-        square1.setBackgroundColor(BACKGROUND_COLOR);
-        square2.setBackgroundColor(BACKGROUND_COLOR);
-
-
-        text1_1.setTextColor(PRIMARY_TEXT_COLOR);
-        text1_2.setTextColor(PRIMARY_TEXT_COLOR);
-        text2_1.setTextColor(PRIMARY_TEXT_COLOR);
-        text2_2.setTextColor(PRIMARY_TEXT_COLOR);
-
         //view.setBackgroundColor(getResources().getColor(PRIMARY_TEXT_COLOR));
+    }
 
-
+    private void setToolbarTitle(String title) {
+        if (getActivity() != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(title);
+        }
     }
 }
 
