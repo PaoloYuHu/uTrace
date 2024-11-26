@@ -44,7 +44,7 @@
             android:elevation="4dp"
             android:orientation="horizontal"
             android:padding="8dp"
-            android:visibility="gone">
+            android:visibility="invisible">
 
             <RadioGroup
                 android:id="@+id/time_filter_group"
@@ -55,20 +55,25 @@
                     android:id="@+id/rb_24h"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="@color/myGreen"
                     android:checked="true"
-                    android:text="24h" />
+                    android:text="24h"
+                    android:textColor="@color/black" />
 
                 <RadioButton
                     android:id="@+id/rb_1week"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1 week" />
+                    android:text="1 week"
+                    android:textColor="@color/black" />
 
                 <RadioButton
                     android:id="@+id/rb_1month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1 month" />
+                    android:buttonTint="@color/myGreen"
+                    android:text="1 month"
+                    android:textColor="@color/black" />
             </RadioGroup>
 
             <RadioGroup
@@ -81,13 +86,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="WiFi" />
+                    android:text="WiFi"
+                    android:textColor="@color/black" />
 
                 <RadioButton
                     android:id="@+id/rb_mobile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mobile" />
+                    android:text="Mobile"
+                    android:textColor="@color/black" />
             </RadioGroup>
 
             <Button
@@ -95,9 +102,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
+                android:backgroundTint="@color/main_color"
                 android:text="Apply"
-                android:backgroundTint="@color/main_color"/>
+                android:textColor="@color/black" />
         </LinearLayout>
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_filter"
