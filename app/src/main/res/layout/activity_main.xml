@@ -18,13 +18,82 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/main_color"
             android:elevation="4dp"
+            android:pointerIcon="cell"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
-            android:title="uTrace"/>
+            android:title="uTrace" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Main content area -->
+    <LinearLayout
+        android:id="@+id/profile_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:elevation="8dp"
+        android:visibility="gone">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="13dp"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            app:cardBackgroundColor="@color/cardview_light_background"
+            app:cardCornerRadius="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ciao User!"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/userScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Punti: 100 🪙"
+                    android:textAlignment="center"
+                    android:textColor="@color/myGreen" />
+
+                <TextView
+                    android:id="@+id/userRanking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rank: 1!"
+                    android:textAlignment="center"
+                    android:textColor="@color/myGreen" />
+
+                <Button
+                    android:id="@+id/settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/main_color"
+                    android:text="Settings"
+                    android:textColor="@color/black" />
+
+                <Switch
+                    android:id="@+id/nightModeSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nightmode"
+                    android:textColor="@color/black"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/MainContainer"
@@ -32,14 +101,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="?attr/actionBarSize"
-        android:paddingBottom="?attr/actionBarSize"/>
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:paddingBottom="?attr/actionBarSize"
+        tools:layout="@layout/fragment_home" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/BottomNavBar"

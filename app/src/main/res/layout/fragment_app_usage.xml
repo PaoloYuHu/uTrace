@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <TextView
@@ -31,80 +32,112 @@
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1" >
+
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/filter_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/card_background"
-            android:elevation="4dp"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:visibility="invisible">
+            android:visibility="gone">
 
-            <RadioGroup
-                android:id="@+id/time_filter_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/rb_24h"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/myGreen"
-                    android:checked="true"
-                    android:text="24h"
-                    android:textColor="@color/black" />
-
-                <RadioButton
-                    android:id="@+id/rb_1week"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1 week"
-                    android:textColor="@color/black" />
-
-                <RadioButton
-                    android:id="@+id/rb_1month"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/myGreen"
-                    android:text="1 month"
-                    android:textColor="@color/black" />
-            </RadioGroup>
-
-            <RadioGroup
-                android:id="@+id/data_type_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/rb_wifi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="WiFi"
-                    android:textColor="@color/black" />
-
-                <RadioButton
-                    android:id="@+id/rb_mobile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Mobile"
-                    android:textColor="@color/black" />
-            </RadioGroup>
-
-            <Button
-                android:id="@+id/btn_apply"
+            <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:backgroundTint="@color/main_color"
-                android:text="Apply"
-                android:textColor="@color/black" />
+                android:layout_marginEnd="35dp"
+                android:layout_marginBottom="15dp"
+                android:elevation="4dp"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                app:cardBackgroundColor="@color/card_background"
+                app:cardCornerRadius="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:orientation="vertical">
+
+                        <RadioGroup
+                            android:id="@+id/time_filter_group"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <RadioButton
+                                android:id="@+id/rb_24h"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/myGreen"
+                                android:checked="true"
+                                android:text="24h"
+                                android:textColor="@color/black" />
+
+                            <RadioButton
+                                android:id="@+id/rb_1week"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1 week"
+                                android:textColor="@color/black" />
+
+                            <RadioButton
+                                android:id="@+id/rb_1month"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/myGreen"
+                                android:text="1 month"
+                                android:textColor="@color/black" />
+
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <RadioGroup
+                            android:id="@+id/data_type_group"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <RadioButton
+                                android:id="@+id/rb_wifi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="WiFi"
+                                android:textColor="@color/black" />
+
+                            <RadioButton
+                                android:id="@+id/rb_mobile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Mobile"
+                                android:textColor="@color/black" />
+
+                            <Button
+                                android:id="@+id/btn_apply"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom|end"
+                                android:backgroundTint="@color/main_color"
+                                android:text="Apply"
+                                android:textColor="@color/black" />
+                        </RadioGroup>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
         </LinearLayout>
 
 
@@ -114,9 +147,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/fab_margin"
             android:src="@drawable/filter_icon"
-            android:backgroundTint="@color/main_color"/>
+            android:backgroundTint="@color/main_color"
+            android:contentDescription="select filters"/>
 
     </LinearLayout>
 

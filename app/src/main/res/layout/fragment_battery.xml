@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.BatteryFragment">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="50dp"
+        app:cardCornerRadius="50dp"
+        android:backgroundTint="@color/card_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/batteryTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:gravity="center|top"
+                android:text="BATTERY"
+                android:textColor="@color/main_color"
+                android:textSize="26dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/batteryInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="serif"
+                android:gravity="center"
+                android:text="infos"
+                android:textColor="@color/black"
+                android:textSize="24dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

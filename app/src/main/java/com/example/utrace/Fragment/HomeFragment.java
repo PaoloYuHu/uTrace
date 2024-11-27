@@ -7,11 +7,11 @@ import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.utrace.R;
@@ -34,8 +34,8 @@ public class HomeFragment extends Fragment {
 
 
     private View view;
-    private CardView square1;
-    private CardView square2;
+    private CardView batteryCard;
+    private CardView internetCard;
     private TextView text1_1;
     private TextView text1_2;
     private TextView text2_1;
@@ -64,8 +64,9 @@ public class HomeFragment extends Fragment {
 
         setToolbarTitle("Home");
 
-        square1 = view.findViewById(R.id.square1);
-        square2 = view.findViewById(R.id.square2);
+
+        batteryCard = view.findViewById(R.id.batteryCard);
+        internetCard = view.findViewById(R.id.internetCard);
         text1_1 = view.findViewById(R.id.text1_1);
         text1_2 = view.findViewById(R.id.text1_2);
         text2_1 = view.findViewById(R.id.text2_1);
@@ -73,8 +74,24 @@ public class HomeFragment extends Fragment {
         chart1 = view.findViewById(R.id.chart1);
         chart2 = view.findViewById(R.id.chart2);
 
-        text1_1.setText("Batteria consumata:");
-        text2_1.setText("Rete utilizzata:");
+        batteryCard.setOnClickListener(v -> {
+            FragmentManager fragmentManager = getParentFragmentManager();  // Use getChildFragmentManager() if in a fragment
+            fragmentManager.beginTransaction()
+                    .replace(R.id.MainContainer, new BatteryFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+        internetCard.setOnClickListener(v -> {
+            FragmentManager fragmentManager = getParentFragmentManager();  // Use getChildFragmentManager() if in a fragment
+            fragmentManager.beginTransaction()
+                    .replace(R.id.MainContainer, new AppUsageFragment())
+                    .addToBackStack(null)
+                    .commit();
+                });
+
+
+        text1_1.setText("Batteria\nConsumi - CO2:");
+        text2_1.setText("Rete\nConsumi - CO2:");
 
         //finche non abbiamo un db riempiamo la applicazione con dati finti
         putSampleData();

@@ -25,7 +25,7 @@
 
                 <!-- Primo quadrato -->
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/square1"
+                    android:id="@+id/batteryCard"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -63,7 +63,7 @@
 
                 <!-- Secondo quadrato -->
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/square2"
+                    android:id="@+id/internetCard"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
