@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.utrace.Adapter.MissionsAdapter;
 import com.example.utrace.Model.Mission;
@@ -62,6 +63,16 @@ public class MissionsFragment extends Fragment {
 
         // Assegna l'Adapter alla RecyclerView
         recyclerView.setAdapter(myAdapter);
+
+        Button button = view.findViewById(R.id.prizes_button);
+
+        button.setOnClickListener(v -> {
+            // Navigazione manuale verso PrizesFragment
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.MainContainer, new PrizesFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
 
         return view;
     }

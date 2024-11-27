@@ -16,7 +16,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/batteryTitle"
@@ -29,16 +31,26 @@
                 android:textSize="26dp"
                 android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/imageViewLogo"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@drawable/battery_icon_2" />
+
+
             <TextView
                 android:id="@+id/batteryInfo"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="serif"
-                android:gravity="center"
+                android:gravity="start"
                 android:text="infos"
+                android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="24dp" />
+                android:textSize="24dp"
+                android:textAlignment="textStart" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

@@ -60,7 +60,7 @@ public class AppUsageFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_app_usage, container, false);
 
-        setToolbarTitle("App usage");
+        setToolbarTitle("Utilizzo App");
 
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

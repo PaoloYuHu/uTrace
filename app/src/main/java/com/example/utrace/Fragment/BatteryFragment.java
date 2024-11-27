@@ -26,7 +26,7 @@ public class BatteryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_battery, container, false);
-        setToolbarTitle("Battery Info");
+        setToolbarTitle("Info Batteria");
 
         batteryInfo = view.findViewById(R.id.batteryInfo);
 
