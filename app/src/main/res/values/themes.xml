@@ -3,7 +3,7 @@
     <style name="Base.Theme.UTrace" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="actionBarStyle">@style/NoRippleMenuItem</item>
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/toolbar_background_light</item>
     </style>
 
     <style name="Theme.UTrace" parent="Base.Theme.UTrace" />
@@ -15,5 +15,4 @@
     <style name="NoRippleMenuItem">
         <item name="android:background">#FFFFFF</item>
     </style>
-
 </resources>

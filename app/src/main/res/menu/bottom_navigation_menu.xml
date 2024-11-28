@@ -3,21 +3,21 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/home_icon"
-        android:title="Home"
+        android:title=""
         android:background="@null"/>
     <item
         android:id="@+id/navigation_missions"
         android:icon="@drawable/mission_icon"
-        android:title="Missions"
+        android:title=""
         android:background="@null"/>
     <item
         android:id="@+id/navigation_usage"
         android:icon="@drawable/usage_icon"
-        android:title="Usage"
+        android:title=""
         android:background="@null"/>
     <item
         android:id="@+id/navigation_tips"
         android:icon="@drawable/tips_icon"
-        android:title="Tips"
+        android:title=""
         android:background="@null"/>
 </menu>

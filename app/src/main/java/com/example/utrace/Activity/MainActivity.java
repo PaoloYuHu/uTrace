@@ -1,13 +1,19 @@
 package com.example.utrace.Activity;
 
+import static com.example.utrace.utils.PermissionUtils.NOTIFICATION_PERMISSION_CODE;
+
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +21,9 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
@@ -25,7 +33,11 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.utrace.R;
 import com.example.utrace.databinding.ActivityMainBinding;
 import com.example.utrace.Fragment.SettingsFragment;
+import com.example.utrace.notifications.MyNotificationChannel;
+import com.example.utrace.notifications.NotificationReceiver;
+import com.example.utrace.utils.PermissionUtils;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,10 +60,19 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
+        //app usage permission
         if (!hasUsageStatsPermission()) {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
         }
+        //notification permission
+        if (PermissionUtils.hasNotificationPermission(this)) {
+            String mes = "Pianta un albero: Aiuta a combattere il cambiamento climatico assorbendo CO2.";
+            scheduleNotification("Green Tip", mes);
+        } else {
+            PermissionUtils.requestNotificationPermission(this);
+        }
+
 
         // Initialize user
         manageLoginAndRegistration();
@@ -151,5 +172,44 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.MainContainer, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+
+    private void scheduleNotification(String title, String message) {
+        MyNotificationChannel.createNotificationChannel(this);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 10);  // Set your desired hour
+        calendar.set(Calendar.MINUTE, 12);      // Set your desired minute
+
+        Intent intent = new Intent(this, NotificationReceiver.class);
+        intent.putExtra("notification_title", title);
+        intent.putExtra("notification_message", message);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        if (alarmManager != null) {
+            long alarmTime = calendar.getTimeInMillis();
+            long windowLengthMillis = 60000L; // 1 minute window, adjust as needed
+
+            alarmManager.setWindow(AlarmManager.RTC_WAKEUP, alarmTime, windowLengthMillis, pendingIntent);
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == NOTIFICATION_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                String mes = "Pianta un albero: Aiuta a combattere il cambiamento climatico assorbendo CO2.";
+                scheduleNotification("Green Tip", mes);
+            } else {
+                Log.d("MainActivity", "Notification permission denied"); // Optionally, show a message to the user
+                Toast.makeText(this, "Permesso per notifiche rifiutata. Non riceverai notifiche.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

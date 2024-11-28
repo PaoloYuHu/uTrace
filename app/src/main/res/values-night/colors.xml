@@ -7,10 +7,10 @@
     <color name="card_background">#b6fdd7</color>
     <color name="navBarOnSelect">#F6810DCA</color>
 
+
     <color name="background_light">#3ab874</color>
     <color name="background_dark">#1E2964</color>
     <color name="toolbar_background_light">#3ab874</color>
     <color name="toolbar_background_dark">#1E3064</color>
-
 
 </resources>

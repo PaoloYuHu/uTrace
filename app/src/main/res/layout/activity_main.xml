@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/main_color"
+            android:background="?colorPrimary"
             android:elevation="4dp"
             android:pointerIcon="cell"
             android:textColor="#FFFFFF"
@@ -47,7 +47,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
+                android:layout_margin="25dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -57,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:text="Ciao User!"
                     android:textAlignment="center"
+                    android:layout_marginBottom="5dp"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -73,14 +74,16 @@
                     android:layout_height="wrap_content"
                     android:text="Rank: 1!"
                     android:textAlignment="center"
+                    android:layout_marginBottom="5dp"
                     android:textColor="@color/myGreen" />
 
                 <Button
                     android:id="@+id/settings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/main_color"
+                    android:backgroundTint="?colorPrimary"
                     android:text="Settings"
+                    android:layout_marginBottom="10dp"
                     android:textColor="@color/black" />
 
                 <Switch
