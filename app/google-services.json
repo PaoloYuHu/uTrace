@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "744204609881",
+    "project_id": "utrace-2268f",
+    "storage_bucket": "utrace-2268f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744204609881:android:88e25ba54415980bfbc448",
+        "android_client_info": {
+          "package_name": "com.example.utrace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuBSzYIgp5o9DgITptqIQbwW68p-1qwXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
