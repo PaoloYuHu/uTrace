@@ -1,105 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:layout_gravity="center"
     android:padding="16dp">
 
-    <!-- CardView -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/card_background"
-        app:cardCornerRadius="20dp"
-        android:padding="16dp"
-        app:cardElevation="4dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp">
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:orientation="vertical"
+     android:gravity="center"
+     android:layout_gravity="center">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            app:cardCornerRadius="20dp"
-            android:padding="16dp">
+     <!-- CardView -->
+     <androidx.cardview.widget.CardView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         app:cardBackgroundColor="@color/card_background"
+         app:cardCornerRadius="20dp"
+         android:padding="16dp"
+         app:cardElevation="4dp"
+         android:layout_marginTop="8dp"
+         android:layout_marginBottom="8dp"
+         android:layout_marginStart="4dp"
+         android:layout_marginEnd="4dp">
 
-            <!-- Parte sinistra: testi -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                android:paddingEnd="8dp">
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+             android:gravity="center_vertical"
+             app:cardCornerRadius="20dp"
+             android:padding="16dp">
 
-                <!-- Ranking -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ranking Attuale"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/main_color" />
+             <!-- Parte sinistra: testi -->
+             <LinearLayout
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:orientation="vertical"
+                 android:layout_weight="1"
+                 android:paddingEnd="8dp">
 
-                <!-- Specifica Ranking -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="SILVER"
-                    android:textSize="18sp"
-                    android:textColor="#666666"
-                    android:textStyle="italic"/>
+                 <!-- Ranking -->
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Ranking Attuale"
+                     android:textSize="18sp"
+                     android:textStyle="bold"
+                     android:textColor="@color/main_color" />
 
-                <!-- # missioni completate-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Missioni Completate: 12/20"
-                    android:textSize="20sp"
-                    android:textColor="#000000" />
+                 <!-- Specifica Ranking -->
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="SILVER"
+                     android:textSize="14sp"
+                     android:textColor="#666666"
+                     android:textStyle="italic"/>
 
-            </LinearLayout>
+                 <!-- # missioni completate-->
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Missioni Completate: 12/20"
+                     android:textSize="16sp"
+                     android:textColor="#000000" />
 
-            <!-- Parte destra: trofeo -->
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/silver_trophy"
-                android:scaleType="centerCrop"
-                android:contentDescription="Descrizione immagine"
-                android:layout_marginStart="8dp" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+             </LinearLayout>
 
-
-    <!-- RecyclerView -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/missions_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clipToPadding="false"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"/>
+             <!-- Parte destra: trofeo -->
+             <ImageView
+                 android:layout_width="80dp"
+                 android:layout_height="80dp"
+                 android:src="@drawable/silver_trophy"
+                 android:scaleType="centerCrop"
+                 android:contentDescription="Descrizione immagine"
+                 android:layout_marginStart="8dp" />
+         </LinearLayout>
+     </androidx.cardview.widget.CardView>
 
 
-    <!-- Bottone per mostrare i premi -->
-    <Button
-        android:id="@+id/prizes_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mostra Premi"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@color/main_color"
-        android:layout_alignParentBottom="true"
-        android:elevation="2dp"
-        android:translationZ="2dp"/>
+     <!-- RecyclerView -->
+     <androidx.recyclerview.widget.RecyclerView
+         android:id="@+id/missions_list"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="1"
+         android:clipToPadding="false"
+         android:paddingTop="5dp"
+         android:paddingBottom="5dp"/>
 
-</LinearLayout>
+
+     <!-- Bottone per mostrare i premi -->
+     <Button
+         android:id="@+id/prizes_button"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="Mostra Premi"
+         android:textSize="16sp"
+         android:textStyle="bold"
+         android:textColor="@android:color/white"
+         android:backgroundTint="@color/main_color"
+         android:layout_alignParentBottom="true"
+         android:elevation="2dp"
+         android:translationZ="2dp"/>
+
+ </LinearLayout>
+
+</RelativeLayout>
 
 

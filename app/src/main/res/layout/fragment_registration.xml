@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Benvenuto!"
-            android:textSize="48sp"
+            android:textSize="40sp"
             android:textStyle="bold"
             android:textColor="#3ab874"
             android:layout_marginBottom="24dp" />
@@ -92,7 +92,7 @@
             android:text="Hai già un account?"
             android:textColor="#000000"
             android:textSize="24sp"
-            android:layout_marginTop="40dp" />
+            android:layout_marginTop="25dp" />
 
         <!-- Login Button -->
         <Button

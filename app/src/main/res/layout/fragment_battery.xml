@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="50dp"
+        android:layout_margin="16dp"
         app:cardCornerRadius="50dp"
         android:backgroundTint="@color/card_background">
 
@@ -24,17 +24,19 @@
                 android:id="@+id/batteryTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="36dp"
                 android:gravity="center|top"
                 android:text="BATTERY"
                 android:textColor="@color/main_color"
-                android:textSize="26dp"
+                android:textSize="40dp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imageViewLogo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:layout_gravity="center"
                 android:src="@drawable/battery_icon_2" />
 
@@ -49,7 +51,7 @@
                 android:text="infos"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="24dp"
+                android:textSize="26dp"
                 android:textAlignment="textStart" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

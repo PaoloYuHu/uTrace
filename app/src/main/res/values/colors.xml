@@ -11,6 +11,6 @@
     <color name="background_dark">#1E2964</color>
     <color name="toolbar_background_light">#3ab874</color>
     <color name="toolbar_background_dark">#1E3064</color>
-
+    <color name="red_color">#F85646</color>
 
 </resources>

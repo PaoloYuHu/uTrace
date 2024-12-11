@@ -90,8 +90,8 @@ public class HomeFragment extends Fragment {
                 });
 
 
-        text1_1.setText("Batteria\nConsumi - CO2:");
-        text2_1.setText("Rete\nConsumi - CO2:");
+        text1_1.setText("Consumi \nBatteria - CO2:");
+        text2_1.setText("Consumi \nRete - CO2:");
 
         //finche non abbiamo un db riempiamo la applicazione con dati finti
         putSampleData();
