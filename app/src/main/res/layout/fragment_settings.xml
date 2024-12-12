@@ -223,37 +223,38 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/logoutBt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="20dp"
-                app:cardBackgroundColor="#d9d9d9"
                 android:elevation="16dp"
-                android:gravity="center">
+                android:gravity="center"
+                app:cardBackgroundColor="#d9d9d9"
+                app:cardCornerRadius="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:orientation="horizontal"
-                    android:padding="@dimen/fab_margin"
-                    android:layout_gravity="center">
+                    android:padding="@dimen/fab_margin">
 
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/logout_icon_red"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        android:src="@drawable/logout_icon_red" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="16dp"
                         android:text="Logout"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/red_color"
                         android:textAlignment="center"
-                        android:layout_gravity="center"/>
+                        android:textColor="@color/red_color"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -263,34 +264,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="20dp"
-                app:cardBackgroundColor="@color/red_color"
                 android:elevation="16dp"
-                android:gravity="center">
+                android:gravity="center"
+                app:cardBackgroundColor="@color/red_color"
+                app:cardCornerRadius="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:orientation="horizontal"
-                    android:padding="@dimen/fab_margin"
-                    android:layout_gravity="center">
+                    android:padding="@dimen/fab_margin">
 
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/eliminate_icon"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        android:src="@drawable/eliminate_icon" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="16dp"
                         android:text="Elimina Account"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
+                        android:textAlignment="center"
                         android:textColor="#FFFFFF"
-                        android:layout_gravity="center"
-                        android:textAlignment="center" />
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 

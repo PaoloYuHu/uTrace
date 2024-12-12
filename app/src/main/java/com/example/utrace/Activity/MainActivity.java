@@ -21,6 +21,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,13 +37,18 @@ import com.example.utrace.Fragment.SettingsFragment;
 import com.example.utrace.notifications.MyNotificationChannel;
 import com.example.utrace.notifications.NotificationReceiver;
 import com.example.utrace.utils.PermissionUtils;
+import com.google.firebase.FirebaseApp;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private String userName;
+    private String email;
+    private int points;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        FirebaseApp.initializeApp(this);
         // Initialize user
         manageLoginAndRegistration();
+
 
         // Initialize the night mode switch based on the saved state
         @SuppressLint("UseSwitchCompatOrMaterialCode") Switch nightModeSwitch = findViewById(R.id.nightModeSwitch);
@@ -115,17 +123,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void manageLoginAndRegistration() {
-        String name = getIntent().getStringExtra("name");
-        String id = getIntent().getStringExtra("id");
-        boolean localStorageIsEmpty = true;
-        if (localStorageIsEmpty) {
-            if (name == null && id == null) {
-                Intent loginIntent = new Intent(MainActivity.this, LoginAndRegistration.class);
-                MainActivity.this.startActivity(loginIntent);
-                finish();
-            } else {
-                // Save the name and id in local storage so it won't ask for login again
+        String extraName = getIntent().getStringExtra("name");
+        String extraEmail = getIntent().getStringExtra("email");
+        int extraPoints = getIntent().getIntExtra("points",0);
+
+        SharedPreferences userPref = getSharedPreferences("user", MODE_PRIVATE);
+
+        boolean isLogged = userPref.getBoolean("isLogged", false);;
+        if (isLogged) {
+            if(extraName != null && !extraName.isEmpty()){
+                SharedPreferences.Editor editor = userPref.edit();
+                userName = extraName;
+                email = extraEmail;
+                points = extraPoints;
+                editor.putString("userName",userName);
+                editor.putString("email",email);
+                editor.putInt("points", points);
+                editor.apply();
+
+                Log.d("MainActivity", "user:"+userName);
+            }else{
+                userName = userPref.getString("userName", "failed");
+                email = userPref.getString("email", "");
+                points = userPref.getInt("points", 0);
+                Log.d("MainActivity", "user:"+userName);
+
             }
+
+        }else{
+            Intent loginIntent = new Intent(MainActivity.this, LoginAndRegistration.class);
+            MainActivity.this.startActivity(loginIntent);
+            finish();
         }
     }
 
@@ -139,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            // Find the LinearLayout
             LinearLayout profileMenu = findViewById(R.id.profile_menu);
 
             // Toggle visibility
@@ -147,6 +174,13 @@ public class MainActivity extends AppCompatActivity {
                 profileMenu.setVisibility(View.GONE);
             } else {
                 profileMenu.setVisibility(View.VISIBLE);
+                // Imposta le informazioni nei TextView del profilo
+                TextView userNameTV = findViewById(R.id.userName);
+                userNameTV.setText(userName);
+                TextView pointsTV = findViewById(R.id.userScore);
+                pointsTV.setText("Points: " + points + "!");
+                TextView rankTV = findViewById(R.id.userRanking);
+                rankTV.setText("rank da impl");
             }
 
             return true;
@@ -154,15 +188,16 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     private void saveNightModeState(boolean nightMode) {
-        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("modePrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("NightMode", nightMode);
         editor.apply();
     }
 
     private boolean loadNightModeState() {
-        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("modePrefs", MODE_PRIVATE);
         return sharedPreferences.getBoolean("NightMode", false);
     }
 

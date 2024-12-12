@@ -64,7 +64,7 @@
                     android:id="@+id/userScore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Punti: 100 🪙"
+                    android:text="Points"
                     android:textAlignment="center"
                     android:textColor="@color/myGreen" />
 

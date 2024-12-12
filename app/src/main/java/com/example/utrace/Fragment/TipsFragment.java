@@ -10,8 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.utrace.Model.Tip;
 import com.example.utrace.R;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TipsFragment extends Fragment {
 
@@ -19,8 +26,7 @@ public class TipsFragment extends Fragment {
     private TextView title;
     private TextView tip;
     private Button tipsBtn;
-    private String[] tips;
-    private String[] titles;
+    private List<Tip> tipList;
     private int currentTipIndex = 0;
 
     public TipsFragment() {
@@ -30,22 +36,8 @@ public class TipsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Initialize tips
-        tips = new String[]{
-                "Pianta un albero: Aiuta a combattere il cambiamento climatico assorbendo CO2.",
-                "Partecipa a iniziative ecologiche: Unisciti a giornate di pulizia o campagne di sensibilizzazione.",
-                "Usa energia verde: Passa a fornitori di energia rinnovabile.",
-                "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA     PROVA SCROLL    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-        };
-
-        // Initialize titles
-        titles = new String[]{
-             "Fai la tua parte!",
-             "Spirito di iniziativa.",
-             "Green Energy.",
-             "Tip Title"
-        };
+        tipList = new ArrayList<>();
+        fetchTipsFromFirestore();
     }
 
     @Override
@@ -54,7 +46,6 @@ public class TipsFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_tips, container, false);
 
-
         setToolbarTitle("Green Tips");
 
         // Initialize views
@@ -62,25 +53,48 @@ public class TipsFragment extends Fragment {
         tip = view.findViewById(R.id.tip);
         tipsBtn = view.findViewById(R.id.next);
 
-        // Set the first tip
-        title.setText(titles[currentTipIndex]);
-        tip.setText(tips[currentTipIndex]);
-
         // Set button click listener to update the tip
         tipsBtn.setOnClickListener(v -> changeTip());
 
         return view;
     }
 
-    private void changeTip() {
-        // Increment the tip index
-        currentTipIndex = (currentTipIndex + 1) % tips.length;
+    private void fetchTipsFromFirestore() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // Update the TextView with the next tip
-        title.setText(titles[currentTipIndex]);
-        tip.setText(tips[currentTipIndex]);
+        db.collection("tips")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        tipList.clear();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Tip tip = document.toObject(Tip.class);
+                            tipList.add(tip);
+                        }
+                        if (!tipList.isEmpty()) {
+                            showTip(0);
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "Errore nel recupero dei tips", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
+    private void showTip(int index) {
+        if (!tipList.isEmpty() && index < tipList.size()) {
+            Tip currentTip = tipList.get(index);
+            title.setText(currentTip.getTitle());
+            tip.setText(currentTip.getTip());
+        }
+    }
+
+    private void changeTip() {
+        // Increment the tip index
+        currentTipIndex = (currentTipIndex + 1) % tipList.size();
+
+        // Update the TextView with the next tip
+        showTip(currentTipIndex);
+    }
 
     private void setToolbarTitle(String title) {
         if (getActivity() != null) {
