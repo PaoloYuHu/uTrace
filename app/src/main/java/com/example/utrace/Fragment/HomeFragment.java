@@ -1,5 +1,15 @@
 package com.example.utrace.Fragment;
 
+import static com.example.utrace.utils.Constants.CELLULAR;
+import static com.example.utrace.utils.Constants.CarbonGramPerGB;
+import static com.example.utrace.utils.Constants.DAY;
+import static com.example.utrace.utils.Constants.GiB;
+import static com.example.utrace.utils.Constants.WIFI;
+
+import android.app.usage.NetworkStats;
+import android.app.usage.NetworkStatsManager;
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -9,6 +19,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +34,15 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public class HomeFragment extends Fragment {
 
+    private static final String TAG = "HomeFragment";
     private static final int APP_COLOR = Color.BLACK;
     // private static final int BACKGROUND_COLOR = Color.GRAY;
     // private static final int PRIMARY_TEXT_COLOR = Color.GREEN;
@@ -43,6 +58,9 @@ public class HomeFragment extends Fragment {
     private BarChart chart1;
     private BarChart chart2;
 
+    List<String> days = List.of(
+            "Dom","Lun", "Mar", "Mer", "Gio", "Ven", "Sab"
+    );
 
     public HomeFragment() {}
 
@@ -63,7 +81,7 @@ public class HomeFragment extends Fragment {
         this.view = inflater.inflate(R.layout.fragment_home, container, false);
 
         setToolbarTitle("Home");
-
+        setDates();
 
         batteryCard = view.findViewById(R.id.batteryCard);
         internetCard = view.findViewById(R.id.internetCard);
@@ -94,45 +112,52 @@ public class HomeFragment extends Fragment {
         text2_1.setText("Consumi \nRete - CO2:");
 
         //finche non abbiamo un db riempiamo la applicazione con dati finti
-        putSampleData();
+        putData();
 
         return view;
     }
 
 
-    private void putSampleData(){
-
-        text1_2.setText("47Watt - 7Kg");
-        text2_2.setText("100Mb - 2Kg");
-        prepareChart(chart1, Color.GREEN, "Consumo batteria");
-        prepareChart(chart2, Color.BLUE, "Consumo rete");
-        style();
-    }
-
-    private void prepareChart(BarChart chart, @ColorInt int color, String label){
-
-        List<String> days = List.of(
-                "Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"
-        );
+    private void putData(){
 
         Random random = new Random();
 
-        List<BarEntry> entries = List.of(
-                new BarEntry(0,random.nextInt(7)),
-                new BarEntry(1,random.nextInt(7)),
-                new BarEntry(2,random.nextInt(7)),
-                new BarEntry(3,random.nextInt(7)),
-                new BarEntry(4,random.nextInt(7)),
-                new BarEntry(5,random.nextInt(7)),
-                new BarEntry(6,random.nextInt(7))
-        );
+        List<BarEntry> usageEntries = fetchScreenTimeData();
+
+
+        List<BarEntry> dataEntries = new ArrayList<>();
+        long lastFetch=fetchNetworkStats(DAY);
+        float maxData=lastFetch/GiB;
+        dataEntries.add(new BarEntry(6, maxData ));
+        for (int i = 1; i < 7; i++) {
+            long currentFetch=fetchNetworkStats(DAY*(i+1));
+            float currentData = (currentFetch-lastFetch)/GiB;
+            dataEntries.add(new BarEntry(6-i,currentData));
+            if(currentData>maxData)
+                maxData=currentData;
+            lastFetch=currentFetch;
+        }
+
+        long dataWeek = fetchNetworkStats(7 * DAY);
+        double dataWeekGiB = (double) dataWeek / GiB;
+        double carbonGram = dataWeekGiB * CarbonGramPerGB;
+
+        text1_2.setText("47Watt - 7Kg");
+        text2_2.setText(String.format("%.2fGB - %.1fg", dataWeekGiB, carbonGram));
+
+        prepareChart(chart1, Color.GREEN, "Screen Time (Ore)", usageEntries, (float) Math.ceil(findMaxUsage(usageEntries)));
+        prepareChart(chart2, Color.BLUE, "Consumo rete (GB)", dataEntries, (float) Math.ceil(maxData));
+
+    }
+
+    private void prepareChart(BarChart chart, @ColorInt int color, String label, List<BarEntry> entries, float max){
 
         BarDataSet datasSet = new BarDataSet(entries, label);
         datasSet.setColor(color);
         chart.setData(new BarData(datasSet));
 
         YAxis yAxis = chart.getAxisLeft();
-        yAxis.setAxisMaximum(10f);
+        yAxis.setAxisMaximum(max);
         yAxis.setAxisLineWidth(1.5f);
         yAxis.setLabelCount(days.size());
 
@@ -154,10 +179,94 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void setDates(){
+        Calendar calendar = Calendar.getInstance();
+        int todayIndex = calendar.get(Calendar.DAY_OF_WEEK);
 
-    private void style(){
-        //view.setBackgroundColor(getResources().getColor(PRIMARY_TEXT_COLOR));
+        List<String> reorderedDays = new ArrayList<>(days);
+        Collections.rotate(reorderedDays, -todayIndex);
+
+        reorderedDays.set(reorderedDays.size() - 1, "Oggi");
+        days=reorderedDays;
     }
+
+    private long fetchNetworkStats(long selectedTime) {
+        NetworkStatsManager networkStatsManager = (NetworkStatsManager) getActivity().getSystemService(getContext().NETWORK_STATS_SERVICE);
+        if (networkStatsManager == null) {
+            Log.e(TAG, "NetworkStatsManager is null.");
+            return 0;
+        }
+
+        long startTime = System.currentTimeMillis() - selectedTime;
+        long endTime = System.currentTimeMillis();
+        long res=0;
+        try {
+            NetworkStats.Bucket bucket = networkStatsManager.querySummaryForDevice(CELLULAR, null, startTime, endTime);
+            res += bucket.getRxBytes();
+            res += bucket.getTxBytes();
+        } catch (Exception e) {
+            Log.e(TAG, "Error querying mobile data usage", e);
+        }
+
+        try {
+            NetworkStats.Bucket bucket = networkStatsManager.querySummaryForDevice(WIFI, null, startTime, endTime);
+            res += bucket.getRxBytes();
+            res += bucket.getTxBytes();
+        } catch (Exception e) {
+            Log.e(TAG, "Error querying Wi-Fi data usage", e);
+        }
+        return res;
+    }
+
+    private List<BarEntry> fetchScreenTimeData() {
+        List<BarEntry> entries = new ArrayList<>();
+        UsageStatsManager usageStatsManager = (UsageStatsManager) requireContext().getSystemService(getContext().USAGE_STATS_SERVICE);
+        if (usageStatsManager == null) {
+            Log.e(TAG, "UsageStatsManager is null");
+            return entries;
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -7);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        long startTime = calendar.getTimeInMillis();
+        long endTime = System.currentTimeMillis();
+
+        List<UsageStats> usageStatsList = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, startTime, endTime);
+
+        // Initialize array to hold daily usage time in milliseconds
+        long[] dailyUsage = new long[7];
+
+        if (usageStatsList != null) {
+            for (UsageStats usageStats : usageStatsList) {
+                long totalTime = usageStats.getTotalTimeInForeground();
+                int dayIndex = (int) ((usageStats.getFirstTimeStamp() - startTime) / DAY);
+                if (dayIndex >= 0 && dayIndex < 7) {
+                    dailyUsage[dayIndex] += totalTime;
+                }
+            }
+        }
+
+        for (int i = 0; i < dailyUsage.length; i++) {
+            float usageInHours = dailyUsage[i] / (1000f * 60 * 60);
+            entries.add(new BarEntry(i, usageInHours));
+        }
+        return entries;
+    }
+
+    private float findMaxUsage(List<BarEntry> entries) {
+        float max = 0;
+        for (BarEntry entry : entries) {
+            if (entry.getY() > max) {
+                max = entry.getY();
+            }
+        }
+        return max;
+    }
+
 
     private void setToolbarTitle(String title) {
         if (getActivity() != null) {
@@ -165,4 +274,7 @@ public class HomeFragment extends Fragment {
         }
     }
 }
+
+
+
 

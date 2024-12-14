@@ -2,16 +2,12 @@ package com.example.utrace.Fragment;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.utrace.Adapter.MissionsAdapter;
-import com.example.utrace.Model.Mission;
 import com.example.utrace.R;
 
 

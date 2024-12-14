@@ -1,6 +1,6 @@
 package com.example.utrace.Adapter;
 
-
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +9,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.utrace.Model.Mission;
+import com.example.utrace.Model.MissionModel;
 import com.example.utrace.R;
 
 import java.util.List;
 
 public class MissionsAdapter extends RecyclerView.Adapter<MissionsAdapter.MyViewHolder> {
 
-    private List<Mission> itemList;
+    private List<MissionModel> itemList;
+    private Context context; // Store the context
 
-    public MissionsAdapter(List<Mission> itemList) {
+    public MissionsAdapter(Context context, List<MissionModel> itemList) {
+        this.context = context; // Initialize the context
         this.itemList = itemList;
     }
 
@@ -39,19 +41,19 @@ public class MissionsAdapter extends RecyclerView.Adapter<MissionsAdapter.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Gonfia il layout per ogni elemento
-        View view = LayoutInflater.from(parent.getContext())
+        // Inflate the layout for each item
+        View view = LayoutInflater.from(context)
                 .inflate(R.layout.mission_list_item, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        // Associa i dati alla vista
-        Mission item = itemList.get(position);
+        // Bind data to the view
+        MissionModel item = itemList.get(position);
         holder.title.setText(item.getTitle());
+        holder.percentage.setText(item.getPercentage(context) + "%");
         holder.description.setText(item.getDescription());
-        holder.percentage.setText(item.getPercentage() + "%");
         holder.icon.setImageResource(item.getIcon());
     }
 
@@ -60,4 +62,3 @@ public class MissionsAdapter extends RecyclerView.Adapter<MissionsAdapter.MyView
         return itemList.size();
     }
 }
-

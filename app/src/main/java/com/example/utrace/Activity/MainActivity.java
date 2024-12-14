@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private String userName;
     private String email;
+    private String userId;
     private int points;
 
     @Override
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
     private void manageLoginAndRegistration() {
         String extraName = getIntent().getStringExtra("name");
         String extraEmail = getIntent().getStringExtra("email");
+        String extraId = getIntent().getStringExtra("userId");
         int extraPoints = getIntent().getIntExtra("points",0);
 
         SharedPreferences userPref = getSharedPreferences("user", MODE_PRIVATE);
@@ -135,9 +137,11 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = userPref.edit();
                 userName = extraName;
                 email = extraEmail;
+                userId = extraId;
                 points = extraPoints;
                 editor.putString("userName",userName);
                 editor.putString("email",email);
+                editor.putString("userId",userId);
                 editor.putInt("points", points);
                 editor.apply();
 
@@ -145,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 userName = userPref.getString("userName", "failed");
                 email = userPref.getString("email", "");
+                userId = userPref.getString("userId", "");
                 points = userPref.getInt("points", 0);
                 Log.d("MainActivity", "user:"+userName);
 

@@ -4,7 +4,6 @@ import android.app.usage.NetworkStats;
 import android.app.usage.NetworkStatsManager;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.net.NetworkCapabilities;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +30,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.example.utrace.utils.Constants.CELLULAR;
+import static com.example.utrace.utils.Constants.DAY;
+import static com.example.utrace.utils.Constants.MiB;
+import static com.example.utrace.utils.Constants.WEEK;
+import static com.example.utrace.utils.Constants.MONTH;
+import static com.example.utrace.utils.Constants.WIFI;
+
 public class AppUsageFragment extends Fragment {
 
     private static final String TAG = "AppUsageFragment";
@@ -39,7 +45,7 @@ public class AppUsageFragment extends Fragment {
     private AppsListAdapter adapter;
     private List<AppModel> appsList = new ArrayList<>();
 
-    private long filterMinMB = 5 * 1024 * 1024; // 5MB
+    private final long filterMinMB = (long)(5 * MiB); // 5MB
 
     private LinearLayout filterMenu;
     private FloatingActionButton fabFilter;
@@ -49,11 +55,6 @@ public class AppUsageFragment extends Fragment {
     private int selectedUsage;
     private long selectedTime;
 
-    private static final int WIFI = NetworkCapabilities.TRANSPORT_WIFI;
-    private static final int CELLULAR = NetworkCapabilities.TRANSPORT_CELLULAR;
-    private static final long DAY = (24 * 60 * 60 * 1000);
-    private static final long WEEK = (7L * 24 * 60 * 60 * 1000);
-    private static final long MONTH = (30L * 24 * 60 * 60 * 1000);
 
     @Nullable
     @Override

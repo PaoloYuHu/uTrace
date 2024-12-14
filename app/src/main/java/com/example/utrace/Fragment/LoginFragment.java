@@ -69,6 +69,7 @@ public class LoginFragment extends Fragment {
                                         editor.putString("userName", retrievedUsername);
                                         editor.putString("email", retrievedEmail);
                                         editor.putInt("points", retrievedPoints);
+                                        editor.putString("userId", userId);
                                         editor.apply();
 
                                         Intent mainIntent = new Intent(getActivity(), MainActivity.class);

@@ -61,7 +61,7 @@ public class RegistrationFragment extends Fragment {
                         FirebaseUser firebaseUser = authRepository.getCurrentUser();
                         if (firebaseUser != null) {
                             userRepository.saveUserData(firebaseUser, username, points);
-
+                            String userId = firebaseUser.getUid();
                             SharedPreferences userPref = requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = userPref.edit();
                             editor.putBoolean("isLogged", true);
@@ -70,6 +70,7 @@ public class RegistrationFragment extends Fragment {
                             Intent mainIntent = new Intent(getActivity(), MainActivity.class);
                             mainIntent.putExtra("name", username);
                             mainIntent.putExtra("email",email);
+                            mainIntent.putExtra("userId",userId);
                             mainIntent.putExtra("points", 0);
                             requireActivity().startActivity(mainIntent);
                             requireActivity().finish();
