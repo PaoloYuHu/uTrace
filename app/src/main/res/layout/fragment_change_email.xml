@@ -29,51 +29,36 @@
 
         <!-- Password Input -->
         <EditText
-            android:id="@+id/editTextPassword"
+            android:id="@+id/newMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="12dp"
+            android:layout_marginTop="60dp"
             android:layout_marginBottom="16dp"
-            android:layout_marginTop="60dp" />
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="12dp" />
 
         <!-- Confirm Password Input -->
         <EditText
-            android:id="@+id/editTextConfirmPassword"
+            android:id="@+id/confirmNewMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Conferma Password"
-            android:inputType="textPassword"
+            android:hint="Conferma Email"
+            android:inputType="textEmailAddress"
             android:padding="12dp"
             android:layout_marginBottom="16dp" />
 
+
         <Button
+            android:id="@+id/confirmBt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:text="Conferma"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"/>
+            android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hai cambiato idea?"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:layout_marginTop="46dp"/>
-
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Annulla"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:backgroundTint="@color/red_color"
-            android:layout_marginBottom="24dp"/>
 
     </LinearLayout>
 

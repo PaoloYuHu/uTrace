@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.utrace.Fragment.HomeFragment;
 import com.example.utrace.R;
 import com.example.utrace.databinding.ActivityMainBinding;
 import com.example.utrace.Fragment.SettingsFragment;
@@ -38,6 +39,8 @@ import com.example.utrace.notifications.MyNotificationChannel;
 import com.example.utrace.notifications.NotificationReceiver;
 import com.example.utrace.utils.PermissionUtils;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
 import java.util.List;
@@ -111,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LinearLayout profileMenu = findViewById(R.id.profile_menu);
+                profileMenu.setVisibility(View.GONE);
                 replaceFragment(new SettingsFragment());
             }
         });
@@ -130,9 +135,9 @@ public class MainActivity extends AppCompatActivity {
         int extraPoints = getIntent().getIntExtra("points",0);
 
         SharedPreferences userPref = getSharedPreferences("user", MODE_PRIVATE);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        boolean isLogged = userPref.getBoolean("isLogged", false);;
-        if (isLogged) {
+        if (user != null) {
             if(extraName != null && !extraName.isEmpty()){
                 SharedPreferences.Editor editor = userPref.edit();
                 userName = extraName;
@@ -145,16 +150,14 @@ public class MainActivity extends AppCompatActivity {
                 editor.putInt("points", points);
                 editor.apply();
 
-                Log.d("MainActivity", "user:"+userName);
+                Log.d("MainActivity", "Registered user:"+userName);
             }else{
                 userName = userPref.getString("userName", "failed");
                 email = userPref.getString("email", "");
                 userId = userPref.getString("userId", "");
                 points = userPref.getInt("points", 0);
-                Log.d("MainActivity", "user:"+userName);
-
+                Log.d("MainActivity", "Logged user:"+userName);
             }
-
         }else{
             Intent loginIntent = new Intent(MainActivity.this, LoginAndRegistration.class);
             MainActivity.this.startActivity(loginIntent);
@@ -220,15 +223,16 @@ public class MainActivity extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 10);  // Set your desired hour
-        calendar.set(Calendar.MINUTE, 12);      // Set your desired minute
+        calendar.add(Calendar.MINUTE, 1);  // Set your desired time
 
+        // Create an intent to trigger the NotificationReceiver
         Intent intent = new Intent(this, NotificationReceiver.class);
         intent.putExtra("notification_title", title);
         intent.putExtra("notification_message", message);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
+        // Set up the notification with the PendingIntent
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         if (alarmManager != null) {
             long alarmTime = calendar.getTimeInMillis();
@@ -237,6 +241,8 @@ public class MainActivity extends AppCompatActivity {
             alarmManager.setWindow(AlarmManager.RTC_WAKEUP, alarmTime, windowLengthMillis, pendingIntent);
         }
     }
+
+
 
 
     @Override

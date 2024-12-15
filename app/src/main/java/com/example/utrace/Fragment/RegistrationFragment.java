@@ -64,7 +64,6 @@ public class RegistrationFragment extends Fragment {
                             String userId = firebaseUser.getUid();
                             SharedPreferences userPref = requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = userPref.edit();
-                            editor.putBoolean("isLogged", true);
                             editor.apply();
 
                             Intent mainIntent = new Intent(getActivity(), MainActivity.class);

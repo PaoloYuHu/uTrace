@@ -28,7 +28,6 @@ public class UserRepository {
     public void saveUserData(FirebaseUser firebaseUser, String username, int points) {
         String userId = firebaseUser.getUid();
         Map<String, Object> user = new HashMap<>();
-        user.put("email", firebaseUser.getEmail());
         user.put("username", username);
         user.put("points", points);
 

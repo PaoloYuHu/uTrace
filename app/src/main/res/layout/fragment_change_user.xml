@@ -29,7 +29,7 @@
 
         <!-- Password Input -->
         <EditText
-            android:id="@+id/editTextUsername"
+            android:id="@+id/newUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"
@@ -40,7 +40,7 @@
 
         <!-- Confirm Password Input -->
         <EditText
-            android:id="@+id/editTextConfirmUsername"
+            android:id="@+id/confirmNewUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Conferma username"
@@ -49,31 +49,15 @@
             android:layout_marginBottom="16dp" />
 
         <Button
+            android:id="@+id/confirmBt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:text="Conferma"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"/>
+            android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hai cambiato idea?"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:layout_marginTop="46dp"/>
-
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Annulla"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:backgroundTint="@color/red_color"
-            android:layout_marginBottom="24dp"/>
 
     </LinearLayout>
 

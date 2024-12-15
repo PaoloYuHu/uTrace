@@ -55,26 +55,25 @@ public class LoginFragment extends Fragment {
                         FirebaseUser firebaseUser = authRepository.getCurrentUser();
                         if (firebaseUser != null) {
                             String userId = firebaseUser.getUid();
+                            String fireEmail = firebaseUser.getEmail();
                             userRepository.getUserData(userId, userDataTask -> {
                                 if (userDataTask.isSuccessful()) {
                                     DocumentSnapshot document = userDataTask.getResult();
                                     if (document.exists()) {
-                                        String retrievedEmail = document.getString("email");
                                         String retrievedUsername = document.getString("username");
                                         Long retrievedPointsL = document.getLong("points");
                                         int retrievedPoints = retrievedPointsL != null ? retrievedPointsL.intValue() : 0;
                                         SharedPreferences userPref = requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
                                         SharedPreferences.Editor editor = userPref.edit();
-                                        editor.putBoolean("isLogged", true);
                                         editor.putString("userName", retrievedUsername);
-                                        editor.putString("email", retrievedEmail);
+                                        editor.putString("email", fireEmail);
                                         editor.putInt("points", retrievedPoints);
                                         editor.putString("userId", userId);
                                         editor.apply();
 
                                         Intent mainIntent = new Intent(getActivity(), MainActivity.class);
                                         mainIntent.putExtra("name", retrievedUsername);
-                                        mainIntent.putExtra("email", retrievedEmail);
+                                        mainIntent.putExtra("email", fireEmail);
                                         mainIntent.putExtra("points", retrievedPoints);
                                         requireActivity().startActivity(mainIntent);
                                         requireActivity().finish();

@@ -12,6 +12,7 @@ public class Constants {
     public static final float MiB = 1024*1024;
     public static final float GiB = 1024*1024*1024;
     public static final float CarbonGramPerGB = 4.2f;
-    public static final float CarbonGramPerWh = 15f;
+    public static final float CarbonGramPerWh = 0.2572f;
+    public static final float avgWattPerHour = 3f;
 }
 

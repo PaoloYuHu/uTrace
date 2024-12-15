@@ -45,25 +45,25 @@
                         android:layout_marginStart="12dp">
 
                         <TextView
+                            android:id="@+id/uUser"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Ciao user"
                             android:textSize="24sp"
                             android:textStyle="italic" />
 
                         <TextView
+                            android:id="@+id/uEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="email: user@email.com"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
+                            android:id="@+id/uCreation"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="ISCRITTO IL GIORNO: XX/XX/XXXX"
+                            android:layout_marginTop="4dp"
                             android:textSize="12sp"
-                            android:textStyle="italic"
-                            android:layout_marginTop="4dp"/>
+                            android:textStyle="italic" />
 
                     </LinearLayout>
 
@@ -73,6 +73,7 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/usernameBt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -98,7 +99,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="Cambia dati personali"
+                        android:text="Cambia Username"
                         android:textSize="24sp"
                         android:textStyle="bold"
                         android:textColor="@color/main_color"
@@ -111,6 +112,7 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/emailBt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -148,6 +150,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/passwordBt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -185,6 +188,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/inviteBt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -260,7 +264,17 @@
 
             </androidx.cardview.widget.CardView>
 
+            <EditText
+                android:id="@+id/passwordDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:visibility="gone" />
+
             <androidx.cardview.widget.CardView
+                android:id="@+id/deleteBt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
