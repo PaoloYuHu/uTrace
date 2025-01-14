@@ -172,16 +172,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="uTrace si propone di rendere visibile e tangibile l’impatto ambientale del mondo digitale, spesso invisibile
-                                agli utenti. Sensibilizzando sul tema dell’inquinamento digitale e fornendo strumenti pratici per ridurlo,
-                                l’app incoraggerà un comportamento più consapevole e responsabile, contribuendo agli obiettivi
-                                dell’ Agenda 2030."
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:textAlignment="center"
                 android:layout_marginTop="@dimen/fab_margin"
-                android:layout_marginBottom="@dimen/fab_margin" />
+                android:layout_marginBottom="@dimen/fab_margin"
+                android:text="uTrace si propone di rendere visibile e tangibile l’impatto ambientale del mondo digitale, spesso invisibile agli utenti. Sensibilizzando sul tema dell’inquinamento digitale e fornendo strumenti pratici per ridurlo, l’app incoraggerà un comportamento più consapevole e responsabile, contribuendo agli obiettivi dell’ Agenda 2030."
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/nextBt"

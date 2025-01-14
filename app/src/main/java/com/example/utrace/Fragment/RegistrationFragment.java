@@ -21,6 +21,8 @@ import com.example.utrace.databinding.FragmentRegistrationBinding;
 import com.example.utrace.db.AuthRepository;
 import com.example.utrace.db.UserRepository;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
@@ -28,6 +30,9 @@ import java.util.Objects;
 public class RegistrationFragment extends Fragment {
 
     private FragmentRegistrationBinding binding;
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,28 +61,47 @@ public class RegistrationFragment extends Fragment {
                 }
 
                 // Creare un nuovo utente
-                userRepository.createUser(email, password, username, points, task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser firebaseUser = authRepository.getCurrentUser();
-                        if (firebaseUser != null) {
-                            userRepository.saveUserData(firebaseUser, username, points);
-                            String userId = firebaseUser.getUid();
-                            SharedPreferences userPref = requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = userPref.edit();
-                            editor.apply();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                            Intent mainIntent = new Intent(getActivity(), MainActivity.class);
-                            mainIntent.putExtra("name", username);
-                            mainIntent.putExtra("email",email);
-                            mainIntent.putExtra("userId",userId);
-                            mainIntent.putExtra("points", 0);
-                            requireActivity().startActivity(mainIntent);
-                            requireActivity().finish();
-                        }
-                    } else {
-                        Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                // Esegui una query per verificare se lo username esiste già
+                db.collection("users")
+                        .whereEqualTo("username", username)
+                        .get()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                QuerySnapshot querySnapshot = task.getResult();
+                                if (querySnapshot.isEmpty()) {
+                                    // Lo username non esiste, crea il nuovo utente
+                                    userRepository.createUser(email, password, username, points, userTask -> {
+                                        if (userTask.isSuccessful()) {
+                                            FirebaseUser firebaseUser = authRepository.getCurrentUser();
+                                            if (firebaseUser != null) {
+                                                userRepository.saveUserData(firebaseUser, username, points);
+                                                String userId = firebaseUser.getUid();
+                                                SharedPreferences userPref = requireActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
+                                                SharedPreferences.Editor editor = userPref.edit();
+                                                editor.apply();
+
+                                                Intent mainIntent = new Intent(getActivity(), MainActivity.class);
+                                                mainIntent.putExtra("name", username);
+                                                mainIntent.putExtra("email", email);
+                                                mainIntent.putExtra("userId", userId);
+                                                mainIntent.putExtra("points", 0);
+                                                requireActivity().startActivity(mainIntent);
+                                                requireActivity().finish();
+                                            }
+                                        } else {
+                                            Toast.makeText(getActivity(), userTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                } else {
+                                    // Lo username esiste già, mostra un messaggio di errore
+                                    Toast.makeText(getActivity(), "Username already exists. Please choose another one.", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(getActivity(), "Er" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
             }
         });
