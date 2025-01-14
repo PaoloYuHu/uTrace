@@ -13,4 +13,9 @@
     <color name="toolbar_background_light">#3ab874</color>
     <color name="toolbar_background_dark">#1E3064</color>
 
+    <color name="bronze">#571D16</color>
+    <color name="silver">#565C6D</color>
+    <color name="gold">#BFB92E</color>
+    <color name="diamond">#2052CE</color>
+
 </resources>

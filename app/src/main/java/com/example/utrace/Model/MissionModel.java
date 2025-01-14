@@ -4,6 +4,8 @@ package com.example.utrace.Model;
 
 import static com.example.utrace.utils.Constants.CELLULAR;
 import static com.example.utrace.utils.Constants.DAY;
+import static com.example.utrace.utils.Constants.GiB;
+import static com.example.utrace.utils.Constants.MiB;
 import static com.example.utrace.utils.Constants.WEEK;
 import static com.example.utrace.utils.Constants.WIFI;
 
@@ -25,11 +27,16 @@ public class MissionModel {
 
     public MissionModel(String id, String title, String description, String repeat, String type, int icon) {
         this.id = id;
-        this.title = title;
         this.description = description;
         this.repeat = repeat;
         this.type = type;
         this.icon = icon;
+        if(repeat.equals("day"))
+            this.title = title+ " (punti: "+this.getPoints()+ ")";
+        else if (repeat.equals("week")) {
+            this.title = title+ " (punti: "+this.getPoints()+ ")";
+        }else
+            this.title = title;
     }
 
     public String getId() {
@@ -98,9 +105,32 @@ public class MissionModel {
         if (totalMOBILE == 0) {
             return 0; // Avoid division by zero
         }
-        description+="\n"+FormatHelper.bytesToString(totalWIFI)+"/"+ FormatHelper.bytesToString(totalMOBILE);
+        if(type.equals("usageMOBILE")){
+            description+="\n"+FormatHelper.bytesToString(totalMOBILE)+" usati";
+            if(repeat.equals("day")){
+                return totalMOBILE<(100*MiB) ? 100 : -1;
+            }else
+                return totalMOBILE<(GiB) ? 100: -1;
+        }else if(type.equals("usageWIFI")){
+            description+="\n"+FormatHelper.bytesToString(totalWIFI)+" usati";
+            if(repeat.equals("day")){
+                return totalWIFI<(500*MiB) ? 100 : -1;
+            }else
+                return totalWIFI<(5*GiB) ? 100: -1;
+        }
 
-        return (int) ((totalWIFI * 100) / totalMOBILE);
+        description+="\n"+FormatHelper.bytesToString(totalWIFI)+"/"+ FormatHelper.bytesToString(totalMOBILE);
+        return Math.min((int) ((totalWIFI * 100) / totalMOBILE), 100);
+    }
+
+    public int getPoints(){
+        int points=0;
+        if(this.repeat.equals("week"))
+            points=5;
+        else points=1;
+        if(this.type.startsWith("usage"))
+            points*=3;
+        return points;
     }
 
 }

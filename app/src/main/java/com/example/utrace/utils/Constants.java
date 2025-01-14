@@ -6,6 +6,7 @@ import android.net.NetworkCapabilities;
 public class Constants {
     public static final int WIFI = NetworkCapabilities.TRANSPORT_WIFI;
     public static final int CELLULAR = NetworkCapabilities.TRANSPORT_CELLULAR;
+    public static final long THREEHOURS = 3 * 60 * 60 * 1000;
     public static final long DAY = 24 * 60 * 60 * 1000;
     public static final long WEEK = 7L * 24 * 60 * 60 * 1000;
     public static final long MONTH = 30L * 24 * 60 * 60 * 1000;

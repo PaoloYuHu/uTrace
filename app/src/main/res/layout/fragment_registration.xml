@@ -36,40 +36,44 @@
             android:id="@+id/editTextUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:hint="Username"
             android:inputType="textPersonName"
             android:padding="12dp"
-            android:layout_marginBottom="16dp" />
+            android:textColor="#000000" />
 
         <!-- Email Input -->
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:padding="12dp"
-            android:layout_marginBottom="16dp" />
+            android:textColor="#000000" />
 
         <!-- Password Input -->
         <EditText
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:hint="Password"
             android:inputType="textPassword"
             android:padding="12dp"
-            android:layout_marginBottom="16dp" />
+            android:textColor="#000000" />
 
         <!-- Confirm Password Input -->
         <EditText
             android:id="@+id/editTextConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
             android:hint="Conferma Password"
             android:inputType="textPassword"
             android:padding="12dp"
-            android:layout_marginBottom="24dp" />
+            android:textColor="#000000" />
 
         <Button
             android:id="@+id/RegisterButton"

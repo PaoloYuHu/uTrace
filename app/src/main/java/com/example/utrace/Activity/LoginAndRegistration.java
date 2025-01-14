@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.utrace.Fragment.LoginFragment;
+import com.example.utrace.Fragment.OnBoardingFragment;
 import com.example.utrace.Fragment.RegistrationFragment;
 import com.example.utrace.R;
 
@@ -31,7 +32,7 @@ public class LoginAndRegistration extends AppCompatActivity {
             return insets;
         });
 
-        loadFragmentLogin();
+        loadOnBoarding();
 
     }
 
@@ -41,8 +42,22 @@ public class LoginAndRegistration extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    private void loadFragmentLogin() {
+    public void loadFragmentLogin() {
         LoginFragment fragment = new LoginFragment();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.replace(R.id.fragment_container, fragment);
+
+        // Optionally, add the transaction to the back stack
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+    private void loadOnBoarding() {
+        OnBoardingFragment fragment = new OnBoardingFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

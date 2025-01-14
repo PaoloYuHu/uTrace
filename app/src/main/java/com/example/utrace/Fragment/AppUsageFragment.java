@@ -19,6 +19,7 @@ import com.example.utrace.Adapter.AppsListAdapter;
 import com.example.utrace.Model.AppModel;
 import com.example.utrace.R;
 import com.example.utrace.utils.FormatHelper;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -62,6 +63,9 @@ public class AppUsageFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_app_usage, container, false);
 
         setToolbarTitle("Utilizzo App");
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.bottom_navigation);
+        bottomNavigationView.getMenu().getItem(2).setChecked(true);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -161,7 +165,7 @@ public class AppUsageFragment extends Fragment {
             NetworkStats.Bucket bucket = networkStatsManager.querySummaryForDevice(CELLULAR, null, startTime, endTime);
             long mobileRxBytes = bucket.getRxBytes();
             long mobileTxBytes = bucket.getTxBytes();
-            dataUsage += "Mobile Down: " + FormatHelper.bytesToString(mobileRxBytes) + " Up: " + FormatHelper.bytesToString(mobileTxBytes) + "\n";
+            dataUsage += "Mobile \uD83D\uDD3D " + FormatHelper.bytesToString(mobileRxBytes) + " \uD83D\uDD3C " + FormatHelper.bytesToString(mobileTxBytes) + "\n";
             Log.i(TAG, "Mobile Rx: " + mobileRxBytes + " bytes, Tx: " + mobileTxBytes + " bytes");
         } catch (Exception e) {
             Log.e(TAG, "Error querying mobile data usage", e);
@@ -171,7 +175,7 @@ public class AppUsageFragment extends Fragment {
             NetworkStats.Bucket bucket = networkStatsManager.querySummaryForDevice(WIFI, null, startTime, endTime);
             long wifiRxBytes = bucket.getRxBytes();
             long wifiTxBytes = bucket.getTxBytes();
-            dataUsage += "Wi-Fi Down: " + FormatHelper.bytesToString(wifiRxBytes) + " Up: " + FormatHelper.bytesToString(wifiTxBytes);
+            dataUsage += "Wi-Fi ⬇\uFE0F " + FormatHelper.bytesToString(wifiRxBytes) + " ⬆\uFE0F " + FormatHelper.bytesToString(wifiTxBytes);
             Log.i(TAG, "Wi-Fi Rx: " + wifiRxBytes + " bytes, Tx: " + wifiTxBytes + " bytes");
         } catch (Exception e) {
             Log.e(TAG, "Error querying Wi-Fi data usage", e);

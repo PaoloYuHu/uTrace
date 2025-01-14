@@ -14,11 +14,13 @@ import android.widget.Toast;
 
 import com.example.utrace.Model.Tip;
 import com.example.utrace.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class TipsFragment extends Fragment {
 
@@ -37,7 +39,6 @@ public class TipsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tipList = new ArrayList<>();
-        fetchTipsFromFirestore();
     }
 
     @Override
@@ -47,7 +48,10 @@ public class TipsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_tips, container, false);
 
         setToolbarTitle("Green Tips");
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.bottom_navigation);
+        bottomNavigationView.getMenu().getItem(3).setChecked(true);
 
+        fetchTipsFromFirestore();
         // Initialize views
         title = view.findViewById(R.id.tip_title);
         tip = view.findViewById(R.id.tip);
@@ -72,7 +76,7 @@ public class TipsFragment extends Fragment {
                             tipList.add(tip);
                         }
                         if (!tipList.isEmpty()) {
-                            showTip(0);
+                            changeTip();
                         }
                     } else {
                         Toast.makeText(getContext(), "Errore nel recupero dei tips", Toast.LENGTH_SHORT).show();
@@ -89,10 +93,8 @@ public class TipsFragment extends Fragment {
     }
 
     private void changeTip() {
-        // Increment the tip index
-        currentTipIndex = (currentTipIndex + 1) % tipList.size();
-
-        // Update the TextView with the next tip
+        Random random = new Random();
+        currentTipIndex = random.nextInt(tipList.size());
         showTip(currentTipIndex);
     }
 

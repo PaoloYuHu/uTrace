@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.OnBoardingFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/fab_margin">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/utrace_logo"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/fab_margin"
+                android:layout_marginBottom="@dimen/fab_margin"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fab_margin"
+                android:layout_marginBottom="@dimen/fab_margin"
+                android:text="SOSTENIBILITÀ DIGITALE"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_color"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fab_margin"
+                android:layout_marginBottom="@dimen/fab_margin"
+                android:text="ECO-CONSAPEVOLEZZA"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_color"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fab_margin"
+                android:layout_marginBottom="@dimen/fab_margin"
+                android:text="EDUCAZIONE AMBIENTALE"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_color"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin"
+                android:backgroundTint="@color/card_background"
+                app:cardCornerRadius="@dimen/fab_margin">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="@dimen/fab_margin">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sostenibilità Digitale"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textAlignment="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="La sostenibilità digitale si riferisce all'uso delle tecnologie digitali in modo da minimizzare l'impatto ambientale, promuovendo pratiche che riducono il consumo di energia, risorse e l'emissione di CO2 associata alle attività online."
+                        android:textSize="16sp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="4dp"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin"
+                android:backgroundTint="@color/card_background"
+                app:cardCornerRadius="@dimen/fab_margin">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="@dimen/fab_margin">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Eco-Consapevolezza"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textAlignment="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="L’eco-consapevolezza è la capacità di comprendere l'impatto ambientale delle proprie azioni e di adottare comportamenti responsabili per proteggere il pianeta."
+                        android:textSize="16sp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="4dp"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin"
+                android:backgroundTint="@color/card_background"
+                app:cardCornerRadius="@dimen/fab_margin">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="@dimen/fab_margin">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Educazione Sostenibile"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textAlignment="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="L’educazione sostenibile è un approccio educativo che mira a fornire conoscenze, competenze e consapevolezza per affrontare le sfide ambientali, sociali ed economiche, promuovendo uno stile di vita più responsabile."
+                        android:textSize="16sp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="4dp"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Con questi concetti uTrace vuole comunicare i propri valori ed obiettivi, mettendo in evidenza l’interconnessione tra tecnologia, ambiente ed educazione."
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_color"
+                android:textAllCaps="true"
+                android:textAlignment="center"
+                android:layout_marginTop="@dimen/fab_margin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="uTrace si propone di rendere visibile e tangibile l’impatto ambientale del mondo digitale, spesso invisibile
+                                agli utenti. Sensibilizzando sul tema dell’inquinamento digitale e fornendo strumenti pratici per ridurlo,
+                                l’app incoraggerà un comportamento più consapevole e responsabile, contribuendo agli obiettivi
+                                dell’ Agenda 2030."
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textAlignment="center"
+                android:layout_marginTop="@dimen/fab_margin"
+                android:layout_marginBottom="@dimen/fab_margin" />
+
+            <Button
+                android:id="@+id/nextBt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fab_margin"
+                android:layout_marginBottom="@dimen/fab_margin"
+                android:text="Avanti"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

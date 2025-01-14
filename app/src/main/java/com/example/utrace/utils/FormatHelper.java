@@ -1,9 +1,12 @@
 package com.example.utrace.utils;
 
+import android.annotation.SuppressLint;
+
 public class FormatHelper {
     //debug tag
     private static final String TAG = FormatHelper.class.getSimpleName();
 
+    @SuppressLint("DefaultLocale")
     public static String bytesToString(Long bytes) {
         if (bytes == null) {
             return "0 Bytes";

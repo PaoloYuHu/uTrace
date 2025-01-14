@@ -43,6 +43,7 @@ public class ChangeUserFragment extends Fragment {
         EditText confirmUsernameText = view.findViewById(R.id.confirmNewUsername);
         Button updateUsernameButton = view.findViewById(R.id.confirmBt);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
         String userId = user.getUid();
         Log.d("Change", "userid" + userId);
         updateUsernameButton.setOnClickListener(v -> {

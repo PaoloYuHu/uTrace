@@ -36,6 +36,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -87,7 +88,18 @@ public class HomeFragment extends Fragment {
         chart2 = view.findViewById(R.id.chart2);
 
         setToolbarTitle("Home");
+
         setDates();
+        // Ensure that getActivity() is not null for the first boot
+        if (getActivity() != null) {
+            BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation);
+            // Ensure that bottomNavigationView is not null
+            if (bottomNavigationView != null) {
+                bottomNavigationView.getMenu().getItem(0).setChecked(true);
+            }
+        }
+
+
 
 
         batteryCard.setOnClickListener(v -> {

@@ -42,5 +42,13 @@
         android:textStyle="bold"
         android:textColor="@color/main_color"
         android:text="30%" />
+    <Button
+        android:id="@+id/mission_completion_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textStyle="bold"
+        android:visibility="gone"/>
+
 
 </LinearLayout>

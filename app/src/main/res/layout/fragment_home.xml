@@ -99,7 +99,7 @@
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
                             android:textColor="#737373"
-                            android:textSize="18dp"
+                            android:textSize="16dp"
                             android:textStyle="bold"
                             android:layout_marginTop="8dp" />
                     </LinearLayout>
@@ -140,7 +140,7 @@
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
                             android:textColor="#737373"
-                            android:textSize="18dp"
+                            android:textSize="16dp"
                             android:textStyle="bold"
                             android:layout_marginTop="8dp" />
                     </LinearLayout>
@@ -150,18 +150,5 @@
 
         </LinearLayout>
 
-        <!-- la view puo essere scrollabile
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="#E0E0E0"
-            android:layout_marginBottom="16dp">
-
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/barChart3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </FrameLayout>
-        -->
     </ScrollView>
 </RelativeLayout>

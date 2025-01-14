@@ -31,20 +31,24 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.utrace.Fragment.HomeFragment;
+import com.example.utrace.Model.Tip;
 import com.example.utrace.R;
 import com.example.utrace.databinding.ActivityMainBinding;
 import com.example.utrace.Fragment.SettingsFragment;
+import com.example.utrace.db.UserRepository;
 import com.example.utrace.notifications.MyNotificationChannel;
 import com.example.utrace.notifications.NotificationReceiver;
 import com.example.utrace.utils.PermissionUtils;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private String email;
     private String userId;
     private int points;
+    private String notificationTip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +81,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         //notification permission
-        if (PermissionUtils.hasNotificationPermission(this)) {
-            String mes = "Pianta un albero: Aiuta a combattere il cambiamento climatico assorbendo CO2.";
-            scheduleNotification("Green Tip", mes);
-        } else {
-            PermissionUtils.requestNotificationPermission(this);
-        }
+        notificationTip="";
+        fetchRandomTipFromFirestore();
 
 
         FirebaseApp.initializeApp(this);
@@ -181,14 +182,34 @@ public class MainActivity extends AppCompatActivity {
             if (profileMenu.getVisibility() == View.VISIBLE) {
                 profileMenu.setVisibility(View.GONE);
             } else {
+                SharedPreferences userPref = getSharedPreferences("user", MODE_PRIVATE);
+                userName = userPref.getString("userName", "failed");
+                email = userPref.getString("email", "");
+                points = userPref.getInt("points", 0);
+
+
+                UserRepository userRepository = new UserRepository();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                assert user != null;
+                String userId = user.getUid();
+                userRepository.getUserRanking(userId, position -> {
+                    if (position != -1) {
+                        // User ranking determined successfully
+                        TextView rankTV = findViewById(R.id.userRanking);
+                        rankTV.setText("rank:" + position + "\uD83C\uDFC5");
+                    } else {
+                        // Handle failure
+                        System.out.println("Failed to determine user ranking.");
+                    }
+                });
+
+
                 profileMenu.setVisibility(View.VISIBLE);
                 // Imposta le informazioni nei TextView del profilo
                 TextView userNameTV = findViewById(R.id.userName);
                 userNameTV.setText(userName);
                 TextView pointsTV = findViewById(R.id.userScore);
-                pointsTV.setText("Points: " + points + "!");
-                TextView rankTV = findViewById(R.id.userRanking);
-                rankTV.setText("rank da impl");
+                pointsTV.setText("Points: " + points + "✨");
             }
 
             return true;
@@ -219,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void scheduleNotification(String title, String message) {
+        Log.d("Notification", "Scheduled "+ message);
         MyNotificationChannel.createNotificationChannel(this);
 
         Calendar calendar = Calendar.getInstance();
@@ -250,12 +272,45 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == NOTIFICATION_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                String mes = "Pianta un albero: Aiuta a combattere il cambiamento climatico assorbendo CO2.";
-                scheduleNotification("Green Tip", mes);
+                scheduleNotification("Green Tip", notificationTip);
             } else {
                 Log.d("MainActivity", "Notification permission denied"); // Optionally, show a message to the user
                 Toast.makeText(this, "Permesso per notifiche rifiutata. Non riceverai notifiche.", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+
+
+    private void fetchRandomTipFromFirestore() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        List<Tip> tipList = new ArrayList<>();
+        db.collection("tips")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        tipList.clear();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Tip tip = document.toObject(Tip.class);
+                            tipList.add(tip);
+                        }
+                        if (!tipList.isEmpty()) {
+                            // Pick a random tip
+                            Random random = new Random();
+                            int randomIndex = random.nextInt(tipList.size());
+                            notificationTip=tipList.get(randomIndex).getTip();
+
+                            if (PermissionUtils.hasNotificationPermission(this)) {
+                                scheduleNotification("Green Tip", notificationTip);
+                            } else {
+                                PermissionUtils.requestNotificationPermission(this);
+                            }
+                        }
+                        Log.d("Notification", "Random tip retrieved");
+                    } else {
+                        Log.d("Notification", "Failed to retrieve tip");
+                    }
+                });
+    }
+
 }

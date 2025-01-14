@@ -2,7 +2,6 @@ package com.example.utrace.Fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -16,13 +15,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.utrace.Adapter.MissionsAdapter;
 import com.example.utrace.Model.MissionModel;
 import com.example.utrace.R;
 import com.example.utrace.db.Mission;
+import com.example.utrace.db.UserRepository;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -53,6 +57,46 @@ public class MissionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_missions, container, false);
 
         setToolbarTitle("Missions");
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.bottom_navigation);
+        bottomNavigationView.getMenu().getItem(1).setChecked(true);
+
+        TextView league = view.findViewById(R.id.league);
+        TextView posit = view.findViewById(R.id.position);
+        ImageView trophy = view.findViewById(R.id.trophy);
+
+        UserRepository userRepository = new UserRepository();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        String userId = user.getUid();
+        userRepository.getUserRanking(userId, position -> {
+            if (position != -1) {
+                SharedPreferences userPref = requireContext().getSharedPreferences("user", MODE_PRIVATE);
+                int points = userPref.getInt("points", 0);
+                String r="Rank: "+position+ "\uD83C\uDFC5 Punti: "+points+"✨";
+                posit.setText(r);
+                if(position==1){
+                    league.setText("Diamante\uD83D\uDC8E");
+                    league.setTextColor(getResources().getColor(R.color.diamond, null));
+                    trophy.setImageResource(R.drawable.diamond_trophy);
+                }else if(position<5){
+                    league.setText("Oro");
+                    league.setTextColor(getResources().getColor(R.color.gold, null));
+                    trophy.setImageResource(R.drawable.gold_trophy);
+                }else if(position<11){
+                    league.setText("Argento");
+                    league.setTextColor(getResources().getColor(R.color.silver, null));
+                    trophy.setImageResource(R.drawable.silver_trophy);
+                }else{
+                    league.setText("Bronzo");
+                    league.setTextColor(getResources().getColor(R.color.bronze, null));
+                    trophy.setImageResource(R.drawable.bronze_trophy);
+                }
+            } else {
+                // Handle failure
+                System.out.println("Failed to determine user ranking.");
+            }
+        });
+
 
         // Find the RecyclerView
         recyclerView = view.findViewById(R.id.missions_list);
@@ -66,11 +110,11 @@ public class MissionsFragment extends Fragment {
         recyclerView.setAdapter(myAdapter);
 
 
-        Button button = view.findViewById(R.id.prizes_button);
+        Button button = view.findViewById(R.id.ranking);
         button.setOnClickListener(v -> {
             // Manual navigation to PrizesFragment
             getParentFragmentManager().beginTransaction()
-                    .replace(R.id.MainContainer, new PrizesFragment())
+                    .replace(R.id.MainContainer, new RankingFragment())
                     .addToBackStack(null)
                     .commit();
         });
@@ -177,15 +221,6 @@ public class MissionsFragment extends Fragment {
         SharedPreferences userPref = requireActivity().getSharedPreferences("user", MODE_PRIVATE);
         Set<String> completedMissionsSet = new HashSet<>(userPref.getStringSet("completedMissions", new HashSet<>()));
         completedMissionsSet.remove(id);
-        SharedPreferences.Editor editor = userPref.edit();
-        editor.putStringSet("completedMissions", completedMissionsSet);
-        editor.apply();
-    }
-
-    private void addCompleted(String id){
-        SharedPreferences userPref = requireActivity().getSharedPreferences("user", MODE_PRIVATE);
-        Set<String> completedMissionsSet = new HashSet<>(userPref.getStringSet("completedMissions", new HashSet<>()));
-        completedMissionsSet.add(id);
         SharedPreferences.Editor editor = userPref.edit();
         editor.putStringSet("completedMissions", completedMissionsSet);
         editor.apply();

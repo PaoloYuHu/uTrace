@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,35 @@ public class UserRepository {
         db.collection("users").document(userId)
                 .get()
                 .addOnCompleteListener(listener);
+    }
+
+    // New method to retrieve user ranking
+    public void getUserRanking(String userId, RankingCallback callback) {
+        db.collection("users")
+                .orderBy("points", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        int position = 1;
+                        for (DocumentSnapshot document : task.getResult()) {
+                            if (document.getId().equals(userId)) {
+                                callback.onRankingDetermined(position);
+                                return;
+                            }
+                            position++;
+                        }
+                        // User not found in the list
+                        callback.onRankingDetermined(-1);
+                    } else {
+                        // Handle failure
+                        callback.onRankingDetermined(-1);
+                    }
+                });
+    }
+
+    // Callback interface for ranking result
+    public interface RankingCallback {
+        void onRankingDetermined(int position);
     }
 }
 
