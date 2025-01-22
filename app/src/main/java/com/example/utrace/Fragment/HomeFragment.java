@@ -241,11 +241,11 @@ public class HomeFragment extends Fragment {
         }
 
         Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -6);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        calendar.add(Calendar.DAY_OF_YEAR, -7);
 
         long[] dailyUsage = new long[7];
 
@@ -266,6 +266,7 @@ public class HomeFragment extends Fragment {
             entries.add(new BarEntry(i, usageInHours));
         }
 
+        Log.e(TAG, "Last day "+dailyUsage[6] / (1000f * 60 * 60));
         return entries;
     }
 

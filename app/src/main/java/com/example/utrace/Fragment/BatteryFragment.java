@@ -66,7 +66,7 @@ public class BatteryFragment extends Fragment {
             int chargeCounter = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER);
 
             // Retrieve battery capacity using PowerProfile
-            int batteryCapacity = getBatteryCapacity(context);
+            int batteryCapacity = getBatteryCapacity(context)*10;
 
             int cycles = chargeCounter/batteryCapacity;
 
